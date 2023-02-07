@@ -3,7 +3,7 @@
 
     <q-header class="bg-primary text-white" elevated >
       <q-toolbar class="row">
-        <q-btn class="col-1" flat label="Accueil" icon="home" />
+        <q-btn class="col-1" flat label="Accueil" icon="home" to="/" />
         <!-- <q-separator vertical inset color="secondary" /> -->
         <q-tabs class="col-10" >
           <q-route-tab to="/" label="Page One" />
