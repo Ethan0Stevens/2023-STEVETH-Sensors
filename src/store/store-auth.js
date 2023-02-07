@@ -1,5 +1,6 @@
 // State : données du magasin
 import { api } from 'boot/axios'
+import { afficherMessageErreur } from 'src/functions/error-message'
 
 const state = {
   user: null,
@@ -24,12 +25,13 @@ Elles peuvent être asynchrones !
  */
 const actions = {
   login ({ commit }, payload) {
+    const that = this
     api
       .post('login', payload)
       .then(response => (commit('setUser', response.data.user) &&
                          commit('setToken', response.data.access_token) &&
-                         this.$router.push('/')))
-      .catch(error => (console.log(error.response)))
+                         that.$router.push('/')))
+      .catch(error => (afficherMessageErreur('Cet utilisateur n\'existe pas !', Object.values(error.response.data)) && throw error))
   }
 }
 
