@@ -19,12 +19,14 @@
                   filled
                   type="email"
                   label="Adresse e-mail *"
-                  lazy-rules
+                  v-model="user.email"
                   :rules="[ val => val && val.length > 0 || 'Champ obligatoire']" />
                 <q-input
                   filled
                   type="password"
-                  label="Mot de passe *" />
+                  label="Mot de passe *"
+                  v-model="user.password"
+                  :rules="[ val => val && val.length > 0 || 'Champ obligatoire']"/>
                 <div class="q-pt-xl" align="center" >
                   <q-btn size="lg" icon="arrow_forward" type="submit" color="primary" round />
                 </div>
@@ -40,8 +42,23 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { mapActions } from 'vuex'
 
 export default defineComponent({
-  name: 'ConnexionPage'
+  name: 'ConnexionPage',
+  data () {
+    return {
+      user: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    ...mapActions('auth', ['login']),
+    onSubmit () {
+      this.login(this.user)
+    }
+  }
 })
 </script>
