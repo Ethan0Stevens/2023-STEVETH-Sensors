@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card q-ma-lg">
+  <q-card class="my-card  q-ma-lg">
     <q-card-section class="bg-accent text-white">
       <div class="text-h2">{{ room.nom }}</div>
     </q-card-section>

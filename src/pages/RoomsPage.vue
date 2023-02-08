@@ -1,8 +1,8 @@
 <template>
   <q-page>
-    <q-img :fit="'fill'" width="100%" height="100vh" src="https://imgs.search.brave.com/G7LlHE745NOfPeXKwSUgMduj7eILYifMt9YC0K99jmk/rs:fit:1200:707:1/g:ce/aHR0cDovL2ltZzIu/d2lraWEubm9jb29r/aWUubmV0L19fY2Iy/MDEyMDIxMzEwNTUy/MS9vbmVwaWVjZS1j/YXQvY2EvaW1hZ2Vz/LzMvMzkvSGFiaXRh/Y2lvbm9pc3N1bm55/LnBuZw">
+    <q-img class="fixed-bottom" height="100vh" src="https://imgs.search.brave.com/G7LlHE745NOfPeXKwSUgMduj7eILYifMt9YC0K99jmk/rs:fit:1200:707:1/g:ce/aHR0cDovL2ltZzIu/d2lraWEubm9jb29r/aWUubmV0L19fY2Iy/MDEyMDIxMzEwNTUy/MS9vbmVwaWVjZS1j/YXQvY2EvaW1hZ2Vz/LzMvMzkvSGFiaXRh/Y2lvbm9pc3N1bm55/LnBuZw">
       <div class="absolute-full flex flex-center">
-        <div class="row vertical-middle absolute-center">
+        <div class="row absolute-center">
           <room
             v-for="room in getRooms"
             :key="room.id"
