@@ -11,7 +11,23 @@
           <q-route-tab to="/" label="Page Three" />
         </q-tabs>
 
-        <q-btn class="col-1" flat label="Se connecter" icon="login" to="/connexion" />
+        <q-btn v-if="!userIsLogedIn" class="col-1" flat label="Se connecter" icon="login" to="/connexion" />
+
+        <q-btn-dropdown v-else class="col-1" color="secondary" label="Compte" dropdown-icon="arrow_drop_down">
+          <q-list>
+            <q-item clickable v-close-popup>
+              <q-item-section>
+                <q-item-label>Profile</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup @click="logout">
+              <q-item-section>
+                <q-item-label>Se déconnecter</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+
       </q-toolbar>
     </q-header>
 
@@ -24,10 +40,10 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'MainLayout',
-
   setup () {
     const leftDrawerOpen = ref(false)
 
@@ -37,6 +53,12 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
     }
+  },
+  computed: {
+    ...mapGetters('auth', ['userIsLogedIn'])
+  },
+  methods: {
+    ...mapActions('auth', ['logout'])
   }
 })
 </script>

@@ -1,6 +1,7 @@
 // State : données du magasin
 import { api } from 'boot/axios'
 import { afficherMessageErreur } from 'src/functions/error-message'
+import { Loading } from 'quasar'
 
 const state = {
   user: null,
@@ -12,10 +13,10 @@ Mutations : méthode qui manipulent les données
 Les mutations ne peuvent pas être asynchrones !!!
  */
 const mutations = {
-  setUser (state, user) {
+  SET_USER (state, user) {
     state.user = user
   },
-  setToken (state, token) {
+  SET_TOKEN (state, token) {
     state.token = token
   }
 }
@@ -24,14 +25,42 @@ Actions : méthodes du magasin qui font appel aux mutations
 Elles peuvent être asynchrones !
  */
 const actions = {
-  login ({ commit }, payload) {
-    const that = this
+  login ({ dispatch }, payload) {
+    Loading.show()
     api
       .post('login', payload)
-      .then(response => (commit('setUser', response.data.user) &&
-                         commit('setToken', response.data.access_token) &&
-                         that.$router.push('/')))
-      .catch(error => (afficherMessageErreur('Cet utilisateur n\'existe pas !', Object.values(error.response.data)) && throw error))
+      .then(response => {
+        dispatch('setUser', response.data)
+      })
+      .catch(error => {
+        Loading.hide()
+        afficherMessageErreur('Cet utilisateur n\'existe pas !', Object.values(error.response.data))
+      })
+  },
+  logout ({ commit, state }) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + state.token }
+    }
+    // Déconnexion de l'API
+    api
+      .post('logout', {}, config)
+      .then(
+        commit('SET_USER', null),
+        commit('SET_TOKEN', null),
+        this.$router.push('/')
+      )
+      .catch(error => {
+        afficherMessageErreur('Déconnexion impossible', Object.values(error.response.data))
+      })
+    Loading.hide()
+  },
+  setUser ({ commit }, data) {
+    commit('SET_USER', data.user)
+    commit('SET_TOKEN', data.access_token)
+    this.$router.push('/')
+    Loading.hide()
   }
 }
 
@@ -41,6 +70,9 @@ Fonctionne comme les propriétés calculées
 Sert à calculer, trier, filtrer ou formater les donneés
  */
 const getters = {
+  userIsLogedIn (state) {
+    return state.user != null && state.token != null
+  }
 }
 
 /*

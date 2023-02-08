@@ -14,7 +14,7 @@
             </q-card-section>
 
             <q-card-section>
-              <q-form @submit="onSubmit">
+              <q-form @submit="login(user)">
                 <q-input
                   filled
                   type="email"
@@ -57,7 +57,6 @@ export default defineComponent({
   methods: {
     ...mapActions('auth', ['login']),
     onSubmit () {
-      this.login(this.user)
     }
   }
 })
