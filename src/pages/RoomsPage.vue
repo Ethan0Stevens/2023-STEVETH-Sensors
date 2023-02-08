@@ -6,7 +6,7 @@
           <room
             v-for="room in getRooms"
             :key="room.id"
-            :room="room"/>
+            :room="room" />
         </div>
       </div>
     </q-img>
@@ -28,7 +28,7 @@ export default defineComponent({
   methods: {
     ...mapActions('sensors', ['getApiRooms'])
   },
-  created () {
+  mounted () {
     this.getApiRooms()
   }
 })

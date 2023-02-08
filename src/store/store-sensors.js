@@ -16,7 +16,18 @@ const mutations = {
     state.sensors = sensors
   },
   SET_ROOMS (state, rooms) {
-    state.rooms = rooms
+    rooms.forEach(room => (state.rooms.push({ ...room, showSensors: false })))
+  },
+  SHOW_SENSORS (state, room) {
+    // Recherche la salle et retourne sa position dans le tableau, son index
+    const index = state.rooms.findIndex(el => el.id === room.id)
+
+    // Si une salle a été trouvée
+    if (index !== -1) {
+      room.showSensors = true
+      // Modifie l'objet trouvé avec les nouvelles valeurs
+      Object.assign(state.rooms[index], room)
+    }
   }
 }
 /*
@@ -41,6 +52,9 @@ const actions = {
       .then(response => commit('SET_ROOMS', response.data))
       .catch(error => console.log(error.response))
     Loading.hide()
+  },
+  showSensors ({ commit }, room) {
+    commit('SHOW_SENSORS', room)
   }
 }
 
@@ -51,6 +65,7 @@ Sert à calculer, trier, filtrer ou formater les donneés
  */
 const getters = {
   getRooms (state) {
+    console.log(state.rooms)
     return [...state.rooms]
   }
 }
