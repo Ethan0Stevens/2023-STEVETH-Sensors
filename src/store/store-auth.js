@@ -49,7 +49,7 @@ const actions = {
       .then(
         commit('SET_USER', null),
         commit('SET_TOKEN', null),
-        this.$router.push('/')
+        location.reload()
       )
       .catch(error => {
         afficherMessageErreur('Déconnexion impossible', Object.values(error.response.data))

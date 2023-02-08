@@ -3,7 +3,7 @@
     <q-img :fit="'fill'" height="100vh" src="https://getwallpapers.com/wallpaper/full/8/7/3/1089718-one-piece-crew-wallpaper-1920x1080-for-full-hd.jpg">
       <div class="absolute-full flex flex-center">
 
-        <q-btn class="fixed-top-left q-ma-xl" label="Retour" size="xl" icon="arrow_back" color="primary" rounded to="/" />
+        <q-btn class="fixed-top-left q-ma-xl" label="Retour" size="xl" icon="arrow_back" color="primary" rounded @click="$router.go(-1)" />
 
         <q-card class="my-card">
           <div class="q-pa-xl">
