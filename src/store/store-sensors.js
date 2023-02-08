@@ -27,6 +27,7 @@ const mutations = {
       room.showSensors = true
       // Modifie l'objet trouvé avec les nouvelles valeurs
       Object.assign(state.rooms[index], room)
+      console.log(state.rooms)
     }
   }
 }
@@ -65,8 +66,16 @@ Sert à calculer, trier, filtrer ou formater les donneés
  */
 const getters = {
   getRooms (state) {
-    console.log(state.rooms)
     return [...state.rooms]
+  },
+  showAllRooms (state) {
+    let show = true
+    state.rooms.forEach((room) => {
+      if (room.showSensors === true) {
+        show = false
+      }
+    })
+    return show
   }
 }
 
