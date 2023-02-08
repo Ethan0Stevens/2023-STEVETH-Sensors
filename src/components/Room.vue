@@ -6,7 +6,8 @@
       </q-card-section>
 
       <q-card-actions vertical align="center">
-        <q-btn class="text-black" flat icon="keyboard_double_arrow_down" @click="showSensors(room)">Afficher capteurs</q-btn>
+        <q-btn class="text-black" v-if="room.showSensors" flat icon="keyboard_double_arrow_up" @click="showSensors(room)">Cacher capteurs</q-btn>
+        <q-btn class="text-black" v-else flat icon="keyboard_double_arrow_down" @click="showSensors(room)">Afficher capteurs</q-btn>
       </q-card-actions>
         <q-scroll-area
           class="bg-white text-black rounded-borders"

@@ -2,11 +2,11 @@
   <q-item
     clickable
     v-ripple
-    active-class="my-menu-link"
-  >
+    active-class="my-menu-link">
     <q-item-section avatar>
-      <q-icon name="inbox" />
+      <q-icon name="sensors" />
     </q-item-section>
+    <q-item-section>{{ sensor.nom }}</q-item-section>
   </q-item>
 </template>
 
@@ -15,6 +15,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'SensorComp',
-  props: []
+  props: ['sensor']
 })
 </script>
