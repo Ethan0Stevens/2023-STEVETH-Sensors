@@ -24,7 +24,7 @@ const mutations = {
 
     // Si une salle a été trouvée
     if (index !== -1) {
-      room.showSensors = true
+      room.showSensors = !room.showSensors
       // Modifie l'objet trouvé avec les nouvelles valeurs
       Object.assign(state.rooms[index], room)
       console.log(state.rooms)
