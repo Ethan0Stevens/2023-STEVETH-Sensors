@@ -6,9 +6,8 @@
         <q-btn class="col-1" flat label="Accueil" icon="home" to="/" />
         <!-- <q-separator vertical inset color="secondary" /> -->
         <q-tabs class="col-10" >
-          <q-route-tab to="/" label="Page One" />
           <q-route-tab to="rooms" label="Salles" />
-          <q-route-tab to="/" label="Page Three" />
+          <q-route-tab to="rooms" label="Capteurs" />
         </q-tabs>
 
         <q-btn v-if="!userIsLogedIn" class="col-1" flat label="Se connecter" icon="login" to="/connexion" />
@@ -16,11 +15,17 @@
         <q-btn-dropdown v-else class="col-1" color="secondary" label="Compte" dropdown-icon="arrow_drop_down">
           <q-list>
             <q-item clickable v-close-popup>
+              <q-item-section avatar>
+                <q-avatar icon="account_circle" color="primary" text-color="white" />
+              </q-item-section>
               <q-item-section>
                 <q-item-label>Profile</q-item-label>
               </q-item-section>
             </q-item>
             <q-item clickable v-close-popup @click="logout">
+              <q-item-section avatar>
+                <q-avatar icon="logout" color="primary" text-color="white" />
+              </q-item-section>
               <q-item-section>
                 <q-item-label>Se déconnecter</q-item-label>
               </q-item-section>
