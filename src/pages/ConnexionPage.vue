@@ -55,9 +55,7 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapActions('auth', ['login']),
-    onSubmit () {
-    }
+    ...mapActions('auth', ['login'])
   }
 })
 </script>

@@ -16,6 +16,7 @@ const mutations = {
     state.sensors = sensors
   },
   SET_ROOMS (state, rooms) {
+    state.rooms = []
     rooms.forEach(room => (state.rooms.push({ ...room, showSensors: false })))
   },
   SHOW_SENSORS (state, room) {
