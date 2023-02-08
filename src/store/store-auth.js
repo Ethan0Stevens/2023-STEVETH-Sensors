@@ -59,7 +59,7 @@ const actions = {
   setUser ({ commit }, data) {
     commit('SET_USER', data.user)
     commit('SET_TOKEN', data.access_token)
-    this.$router.push('/')
+    this.$router.go(-1)
     Loading.hide()
   }
 }
