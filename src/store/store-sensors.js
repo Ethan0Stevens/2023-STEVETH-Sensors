@@ -2,6 +2,7 @@
 import { api } from 'boot/axios'
 
 const state = {
+  rooms: [],
   sensors: []
 }
 
@@ -12,6 +13,9 @@ Les mutations ne peuvent pas être asynchrones !!!
 const mutations = {
   SET_SENSORS (state, sensors) {
     state.sensors = sensors
+  },
+  SET_ROOMS (state, rooms) {
+    state.rooms = rooms
   }
 }
 /*
@@ -24,6 +28,12 @@ const actions = {
       .get('capteurs')
       .then(response => commit('SET_SENSORS', response.data))
       .catch(error => console.log(error.response))
+  },
+  getApiRooms ({ commit }) {
+    api
+      .get('salles')
+      .then(response => commit('SET_ROOMS', response.data))
+      .catch(error => console.log(error.response))
   }
 }
 
@@ -33,6 +43,9 @@ Fonctionne comme les propriétés calculées
 Sert à calculer, trier, filtrer ou formater les donneés
  */
 const getters = {
+  getRooms (state) {
+    return [...state.rooms]
+  }
 }
 
 /*

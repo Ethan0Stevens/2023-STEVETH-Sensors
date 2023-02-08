@@ -7,7 +7,7 @@
         <!-- <q-separator vertical inset color="secondary" /> -->
         <q-tabs class="col-10" >
           <q-route-tab to="/" label="Page One" />
-          <q-route-tab to="sensors" label="Capteurs" />
+          <q-route-tab to="rooms" label="Salles" />
           <q-route-tab to="/" label="Page Three" />
         </q-tabs>
 
