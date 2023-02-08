@@ -1,5 +1,6 @@
 // State : données du magasin
 import { api } from 'boot/axios'
+import { Loading } from 'quasar'
 
 const state = {
   rooms: [],
@@ -29,11 +30,17 @@ const actions = {
       .then(response => commit('SET_SENSORS', response.data))
       .catch(error => console.log(error.response))
   },
-  getApiRooms ({ commit }) {
+  getApiRooms ({ commit, rootState }) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + rootState.auth.token }
+    }
     api
-      .get('salles')
+      .get('salles', config)
       .then(response => commit('SET_ROOMS', response.data))
       .catch(error => console.log(error.response))
+    Loading.hide()
   }
 }
 
