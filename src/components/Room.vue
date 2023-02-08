@@ -1,114 +1,13 @@
 <template>
-  <q-card class="my-card">
-    <q-card-section class="bg-grey-8 text-white">
+  <q-card class="my-card q-ma-lg">
+    <q-card-section class="bg-accent text-white">
       <div class="text-h2">{{ room.nom }}</div>
     </q-card-section>
 
     <q-card-actions vertical align="center">
-      <q-btn flat>Action 1</q-btn>
-      <q-btn flat>Action 2</q-btn>
+      <q-btn class="text-black" flat icon="keyboard_double_arrow_down" >Afficher capteurs</q-btn>
     </q-card-actions>
   </q-card>
-  <q-card class="my-card">
-    <q-card-section class="bg-grey-8 text-white">
-      <div class="text-h2">{{ room.nom }}</div>
-    </q-card-section>
-
-    <q-card-actions vertical align="center">
-      <q-btn flat>Action 1</q-btn>
-      <q-btn flat>Action 2</q-btn>
-    </q-card-actions>
-  </q-card>
-  <q-card class="my-card">
-    <q-card-section class="bg-grey-8 text-white">
-      <div class="text-h2">{{ room.nom }}</div>
-    </q-card-section>
-
-    <q-card-actions vertical align="center">
-      <q-btn flat>Action 1</q-btn>
-      <q-btn flat>Action 2</q-btn>
-    </q-card-actions>
-  </q-card>
-  <q-card class="my-card">
-    <q-card-section class="bg-grey-8 text-white">
-      <div class="text-h2">{{ room.nom }}</div>
-    </q-card-section>
-
-    <q-card-actions vertical align="center">
-      <q-btn flat>Action 1</q-btn>
-      <q-btn flat>Action 2</q-btn>
-    </q-card-actions>
-  </q-card>
-  <q-card class="my-card">
-    <q-card-section class="bg-grey-8 text-white">
-      <div class="text-h2">{{ room.nom }}</div>
-    </q-card-section>
-
-    <q-card-actions vertical align="center">
-      <q-btn flat>Action 1</q-btn>
-      <q-btn flat>Action 2</q-btn>
-    </q-card-actions>
-  </q-card>
-  <q-card class="my-card">
-    <q-card-section class="bg-grey-8 text-white">
-      <div class="text-h2">{{ room.nom }}</div>
-    </q-card-section>
-
-    <q-card-actions vertical align="center">
-      <q-btn flat>Action 1</q-btn>
-      <q-btn flat>Action 2</q-btn>
-    </q-card-actions>
-  </q-card>
-  <q-card class="my-card">
-    <q-card-section class="bg-grey-8 text-white">
-      <div class="text-h2">{{ room.nom }}</div>
-    </q-card-section>
-
-    <q-card-actions vertical align="center">
-      <q-btn flat>Action 1</q-btn>
-      <q-btn flat>Action 2</q-btn>
-    </q-card-actions>
-  </q-card>
-  <q-card class="my-card">
-    <q-card-section class="bg-grey-8 text-white">
-      <div class="text-h2">{{ room.nom }}</div>
-    </q-card-section>
-
-    <q-card-actions vertical align="center">
-      <q-btn flat>Action 1</q-btn>
-      <q-btn flat>Action 2</q-btn>
-    </q-card-actions>
-  </q-card>
-  <q-card class="my-card">
-    <q-card-section class="bg-grey-8 text-white">
-      <div class="text-h2">{{ room.nom }}</div>
-    </q-card-section>
-
-    <q-card-actions vertical align="center">
-      <q-btn flat>Action 1</q-btn>
-      <q-btn flat>Action 2</q-btn>
-    </q-card-actions>
-  </q-card><q-card class="my-card">
-  <q-card-section class="bg-grey-8 text-white">
-    <div class="text-h2">{{ room.nom }}</div>
-  </q-card-section>
-
-  <q-card-actions vertical align="center">
-    <q-btn flat>Action 1</q-btn>
-    <q-btn flat>Action 2</q-btn>
-  </q-card-actions>
-</q-card>
-  <q-card class="my-card">
-    <q-card-section class="bg-grey-8 text-white">
-      <div class="text-h2">{{ room.nom }}</div>
-    </q-card-section>
-
-    <q-card-actions vertical align="center">
-      <q-btn flat>Action 1</q-btn>
-      <q-btn flat>Action 2</q-btn>
-    </q-card-actions>
-  </q-card>
-
 </template>
 
 <script>
