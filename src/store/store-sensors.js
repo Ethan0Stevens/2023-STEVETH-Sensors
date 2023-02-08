@@ -36,9 +36,12 @@ Actions : méthodes du magasin qui font appel aux mutations
 Elles peuvent être asynchrones !
  */
 const actions = {
-  getApiSensors ({ commit }) {
+  getApiSensors ({ commit, rootState }) {
+    const config = {
+      headers: { Authorization: 'Bearer ' + rootState.auth.token }
+    }
     api
-      .get('capteurs')
+      .get('capteurs', config)
       .then(response => commit('SET_SENSORS', response.data))
       .catch(error => console.log(error.response))
   },
@@ -67,6 +70,9 @@ Sert à calculer, trier, filtrer ou formater les donneés
 const getters = {
   getRooms (state) {
     return [...state.rooms]
+  },
+  getSensors (state) {
+    return [...state.sensors]
   },
   showAllRooms (state) {
     let show = true

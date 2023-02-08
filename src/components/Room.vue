@@ -14,7 +14,9 @@
           v-if="room.showSensors" >
           <div class="q-py-sm q-px-md">
             <q-list bordered padding class="rounded-borders text-primary">
-              <sensor/>
+              <sensor v-for="sensor in getSensors"
+                      :key="sensor.id"
+                      :sensor="sensor" />
             </q-list>
           </div>
         </q-scroll-area>
@@ -33,10 +35,13 @@ export default defineComponent({
     sensor: require('components/Sensor.vue').default
   },
   methods: {
-    ...mapActions('sensors', ['showSensors'])
+    ...mapActions('sensors', ['showSensors', 'getApiSensors'])
   },
   computed: {
-    ...mapGetters('sensors', ['showAllRooms'])
+    ...mapGetters('sensors', ['showAllRooms', 'getSensors'])
+  },
+  mounted () {
+    this.getApiSensors()
   }
 })
 </script>
