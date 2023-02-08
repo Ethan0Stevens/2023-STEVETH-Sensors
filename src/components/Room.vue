@@ -41,7 +41,7 @@ export default defineComponent({
   computed: {
     ...mapGetters('sensors', ['showAllRooms', 'getSensors'])
   },
-  mounted () {
+  created () {
     this.getApiSensors()
   }
 })
