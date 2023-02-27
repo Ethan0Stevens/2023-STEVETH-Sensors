@@ -53,7 +53,7 @@ export default defineComponent({
           cancel = morph({
             from: morphRef.value,
             onToggle,
-            duration: 200,
+            duration: 150,
             tween: true,
             onEnd: end => {
               end === 'from' && onToggle()

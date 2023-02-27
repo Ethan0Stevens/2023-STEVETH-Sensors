@@ -8,16 +8,7 @@
             :key="room.id"
             :room="room" />
         </div>
-        <div class="absolute-center"  v-else>
-          <q-btn
-            rounded
-            size="2vh"
-            class="q-px-xl q-py-xs"
-            color="secondary"
-            label="Vous devez être connecté pour voir la liste des salles !"
-            to="connexion"
-          />
-        </div>
+        <btn-loged-in v-else/>
       </div>
     </q-img>
   </q-page>
@@ -30,7 +21,8 @@ import { mapActions, mapGetters } from 'vuex'
 export default defineComponent({
   name: 'RoomsPage',
   components: {
-    room: require('components/Room.vue').default
+    room: require('components/Room.vue').default,
+    btnLogedIn: require('components/BtnErrorLogedIn.vue').default
   },
   computed: {
     ...mapGetters('sensors', ['getRooms']),

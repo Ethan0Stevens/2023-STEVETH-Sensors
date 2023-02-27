@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <video class="fixed-bottom-right" src="../assets/one-piece.mp4" autoplay muted loop />
+    <video class="fixed-bottom-right" src="../assets/one-piece-sunny.mp4" autoplay muted loop />
     <div class="absolute-full flex flex-center" style="background: rgba(0, 0, 0, 0.4)">
       <h1 class="text-white">Bienvenu !</h1>
     </div>
