@@ -5,36 +5,80 @@
 
         <q-btn class="fixed-top-left q-ma-xl" label="Retour" size="xl" icon="arrow_back" color="primary" rounded @click="$router.go(-1)" />
 
-        <q-card class="my-card">
-          <div class="q-pa-xl">
+        <div class="q-pa-md flex-center" style="width: 30vw; height: auto; background: rgba(0, 0, 0, 0.7)">
+          <q-list bordered padding class="rounded-borders text-primary">
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'inbox'"
+              @click="link = 'inbox'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="inbox" />
+              </q-item-section>
 
-            <q-card-section>
-              <div class="text-bold text-black text-h3" align="center">Connexion</div>
-              <q-separator class="bg-primary"/>
-            </q-card-section>
+              <q-item-section class="text-h6">Inbox</q-item-section>
+            </q-item>
 
-            <q-card-section>
-              <q-form @submit="login(user)">
-                <q-input
-                  filled
-                  type="email"
-                  label="Adresse e-mail *"
-                  v-model="user.email"
-                  :rules="[ val => val && val.length > 0 || 'Champ obligatoire']" />
-                <q-input
-                  filled
-                  type="password"
-                  label="Mot de passe *"
-                  v-model="user.password"
-                  :rules="[ val => val && val.length > 0 || 'Champ obligatoire']"/>
-                <div class="q-pt-xl" align="center" >
-                  <q-btn size="lg" icon="arrow_forward" type="submit" color="primary" round />
-                </div>
-              </q-form>
-            </q-card-section>
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'outbox'"
+              @click="link = 'outbox'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="send" />
+              </q-item-section>
 
-          </div>
-        </q-card>
+              <q-item-section class="text-h6">Outbox</q-item-section>
+            </q-item>
+
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'trash'"
+              @click="link = 'trash'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="delete" />
+              </q-item-section>
+
+              <q-item-section class="text-h6">Trash</q-item-section>
+            </q-item>
+
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'settings'"
+              @click="link = 'settings'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="settings" />
+              </q-item-section>
+
+              <q-item-section class="text-h6">Settings</q-item-section>
+            </q-item>
+
+            <q-item
+              clickable
+              v-ripple
+              :active="link === 'help'"
+              @click="link = 'help'"
+              active-class="my-menu-link"
+            >
+              <q-item-section avatar>
+                <q-icon name="help" />
+              </q-item-section>
+
+              <q-item-section class="text-h6">Help</q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+
       </div>
     </q-img>
   </q-page>
