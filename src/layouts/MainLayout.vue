@@ -14,7 +14,7 @@
 
         <q-btn-dropdown v-else class="col-1" color="secondary" label="Compte" dropdown-icon="arrow_drop_down">
           <q-list>
-            <q-item clickable v-close-popup>
+            <q-item clickable v-close-popup to="/profile">
               <q-item-section avatar>
                 <q-avatar icon="account_circle" color="primary" text-color="white" />
               </q-item-section>

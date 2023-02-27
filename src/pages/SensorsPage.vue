@@ -36,10 +36,10 @@ export default defineComponent({
     ...mapGetters('auth', ['userIsLogedIn'])
   },
   methods: {
-    ...mapActions('sensors', ['getApiRooms'])
+    ...mapActions('sensors', ['getApiSensors'])
   },
   created () {
-    this.getApiRooms()
+    this.getApiSensors()
   }
 })
 </script>
