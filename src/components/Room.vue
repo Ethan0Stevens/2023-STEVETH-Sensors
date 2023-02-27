@@ -1,5 +1,5 @@
 <template>
-  <div class="q-ma-lg" v-if="showAllRooms || room.showSensors" ref="morphRef">
+  <div class="q-ma-lg" :class="!room.showSensors && !showAllRooms ? 'hidden' : ''" ref="morphRef">
     <q-card class="my-card">
       <q-card-section class="bg-accent text-white justify-center">
         <div class="text-h2 text-center">{{ room.nom }}</div>
@@ -53,15 +53,14 @@ export default defineComponent({
           cancel = morph({
             from: morphRef.value,
             onToggle,
-            duration: 700,
-            resize: true,
+            duration: 200,
+            tween: true,
             onEnd: end => {
               end === 'from' && onToggle()
             }
           })
-        } else {
-          this.showSensors(room)
         }
+        this.showSensors(room)
       }
     }
   },
