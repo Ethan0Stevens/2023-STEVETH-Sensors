@@ -15,7 +15,9 @@
     "core-js": "^3.6.5",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
+    "vue-responsive-video-background-player": "^2.3.1",
     "vue-router": "^4.0.0",
+    "vue-videobg": "^2.0.0",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
