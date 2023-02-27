@@ -11,13 +11,14 @@
       </q-card-actions>
         <q-scroll-area
           class="bg-white text-black rounded-borders"
-          style="height: 1px; min-height: 60vh; min-width: 100vh"
+          style="height: 1px; min-height: 60vh; min-width: 50vw"
           v-if="room.showSensors" >
           <div class="q-py-sm q-px-md">
             <q-list bordered padding class="rounded-borders text-primary">
-              <sensor v-for="sensor in getSensors"
-                      :key="sensor.id"
-                      :sensor="sensor" />
+                <sensor v-for="sensor in getSensors"
+                        :key="sensor.id"
+                        :sensor="sensor"
+                        :roomId="room.id" />
             </q-list>
           </div>
         </q-scroll-area>

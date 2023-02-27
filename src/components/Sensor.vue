@@ -1,13 +1,16 @@
 <template>
-  <q-item
-    clickable
-    v-ripple
-    active-class="my-menu-link">
-    <q-item-section avatar>
-      <q-icon name="sensors" />
-    </q-item-section>
-    <q-item-section>{{ sensor.nom }}</q-item-section>
-  </q-item>
+  <q-expansion-item
+    v-if="sensor.salle.id === roomId"
+    expand-separator
+    icon="sensors"
+    :label="sensor.nom" >
+    <div class="row justify-center">
+      <mesure v-for="mesure in sensor.mesures"
+              :key="mesure.id"
+              :mesure="mesure">
+      </mesure>
+    </div>
+  </q-expansion-item>
 </template>
 
 <script>
@@ -15,6 +18,12 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'SensorComp',
-  props: ['sensor']
+  props: [
+    'sensor',
+    'roomId'
+  ],
+  components: {
+    mesure: require('components/Mesure.vue').default
+  }
 })
 </script>
