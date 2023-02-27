@@ -1,7 +1,7 @@
 <template>
   <q-expansion-item
     class="text-subtitle1"
-    v-if="sensor.salle.id === roomId"
+    v-if="sensor.salle.id === roomId || roomId === 'all'"
     expand-separator
     icon="sensors"
     :label="sensor.nom" >
