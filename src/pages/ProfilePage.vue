@@ -10,12 +10,11 @@
             <q-item
               clickable
               v-ripple
-              :active="link === 'inbox'"
               @click="link = 'inbox'"
               active-class="my-menu-link"
             >
               <q-item-section avatar>
-                <q-icon name="inbox" />
+                <q-icon name="inbox" :color="link === 'inbox' ? 'primary' : 'grey'" />
               </q-item-section>
 
               <q-item-section class="text-h6">Inbox</q-item-section>
@@ -24,12 +23,11 @@
             <q-item
               clickable
               v-ripple
-              :active="link === 'outbox'"
               @click="link = 'outbox'"
               active-class="my-menu-link"
             >
               <q-item-section avatar>
-                <q-icon name="send" />
+                <q-icon name="send" :color="link === 'outbox' ? 'primary' : 'grey'" />
               </q-item-section>
 
               <q-item-section class="text-h6">Outbox</q-item-section>
@@ -38,12 +36,11 @@
             <q-item
               clickable
               v-ripple
-              :active="link === 'trash'"
               @click="link = 'trash'"
               active-class="my-menu-link"
             >
               <q-item-section avatar>
-                <q-icon name="delete" />
+                <q-icon name="delete" :color="link === 'trash' ? 'primary' : 'grey'" />
               </q-item-section>
 
               <q-item-section class="text-h6">Trash</q-item-section>
@@ -52,12 +49,11 @@
             <q-item
               clickable
               v-ripple
-              :active="link === 'settings'"
               @click="link = 'settings'"
               active-class="my-menu-link"
             >
               <q-item-section avatar>
-                <q-icon name="settings" />
+                <q-icon name="settings" :color="link === 'settings' ? 'primary' : 'grey'" />
               </q-item-section>
 
               <q-item-section class="text-h6">Settings</q-item-section>
@@ -66,12 +62,11 @@
             <q-item
               clickable
               v-ripple
-              :active="link === 'help'"
               @click="link = 'help'"
               active-class="my-menu-link"
             >
               <q-item-section avatar>
-                <q-icon name="help" />
+                <q-icon name="help" :color="link === 'help' ? 'primary' : 'grey'" />
               </q-item-section>
 
               <q-item-section class="text-h6">Help</q-item-section>
@@ -95,7 +90,8 @@ export default defineComponent({
       user: {
         email: '',
         password: ''
-      }
+      },
+      link: ''
     }
   },
   methods: {
