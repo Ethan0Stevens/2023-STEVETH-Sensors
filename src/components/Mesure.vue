@@ -5,7 +5,7 @@
     </q-card-section>
     <q-separator/>
     <q-card-section class="text-black" >
-      <div> Temperature : {{ mesure.temperature }}  </div>
+      <div> Temperature : {{ mesure.temperature }}</div>
       <div> Humidité : {{ mesure.humidite }}  </div>
       <div> Sequence : {{ mesure.sequence }}  </div>
       <div> Date : {{ mesure.date }}  </div>

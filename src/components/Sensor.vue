@@ -1,5 +1,6 @@
 <template>
   <q-expansion-item
+    class="text-subtitle1"
     v-if="sensor.salle.id === roomId"
     expand-separator
     icon="sensors"
