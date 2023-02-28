@@ -66,7 +66,7 @@
                 <div class="col absolute-bottom q-ma-lg column">
                   <q-btn class="q-ma-lg text-subtitle1" v-if="newUserValues.photo !== this.getUser.photo" label="Annuler" @click="newUserValues.photo = this.getUser.photo" color="primary" />
                   <q-input outlined label="Lien photo de profil" v-model="newUserValues.photo" />
-                  <q-btn class="full-width q-pa-md q-ma-lg text-h6" label="Sauvegarder" @click="updateUser(newUserValues)" color="primary" />
+                  <q-btn class="full-width q-pa-md q-ma-lg text-h6" :disable="newUserValues.photo === this.getUser.photo" label="Sauvegarder" @click="updateUser(newUserValues)" color="primary" />
                 </div>
               </q-card-section>
             </q-card>
