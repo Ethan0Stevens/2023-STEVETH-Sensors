@@ -10,7 +10,7 @@
             <q-item
               clickable
               v-ripple
-              @click="link = 'profile'"
+              @click="scoll('profile')"
               active-class="my-menu-link" >
               <q-item-section avatar>
                 <q-icon name="face" :color="link === 'profile' ? '' : 'grey'" />
@@ -22,7 +22,7 @@
             <q-item
               clickable
               v-ripple
-              @click="link = 'password'"
+              @click="scoll('password')"
               active-class="my-menu-link" >
               <q-item-section avatar>
                 <q-icon name="vpn_key" :color="link === 'password' ? '' : 'grey'" />
@@ -34,7 +34,7 @@
             <q-item
               clickable
               v-ripple
-              @click="link = 'info'"
+              @click="scoll('info')"
               active-class="my-menu-link" >
               <q-item-section avatar>
                 <q-icon name="contacts" :color="link === 'info' ? '' : 'grey'" />
@@ -46,6 +46,7 @@
         </div>
 
         <q-scroll-area
+          ref="scrollAreaRef"
           class="text-black fixed-bottom-right"
           style="height: 1px; min-height: 100vh; min-width: 70vw; background: rgba(0, 0, 0, 0.5)">
           <div class="q-py-xs flex-center">
@@ -54,18 +55,17 @@
                 <div class="text-h2 text-bold text-primary absolute-center">Profil</div>
               </q-card-section>
               <q-card-section class="bg-white col column">
-                <div class="col-9 relative-position">
+                <div class="col-6 relative-position">
                   <q-img
                     class="absolute-center"
-                    style="border-radius: 100%;"
+                    style="border-radius: 100%; max-width: 15vw"
                     :src="newUserValues.photo === null || newUserValues.photo === '' ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : newUserValues.photo"
-                    height="30vh"
-                    width="30vh"/>
+                    width="100%"/>
                 </div>
 
                 <div class="col absolute-bottom q-ma-lg column">
                   <q-btn class="q-ma-lg text-subtitle1" v-if="newUserValues.photo !== this.getUser.photo" label="Annuler" @click="newUserValues.photo = this.getUser.photo" color="primary" />
-                  <q-input outlined label="Nouveau lien" v-model="newUserValues.photo" />
+                  <q-input outlined label="Lien photo de profil" v-model="newUserValues.photo" />
                   <q-btn class="full-width q-pa-md q-ma-lg text-h6" label="Sauvegarder" @click="updateUser(newUserValues)" color="primary" />
                 </div>
               </q-card-section>
@@ -147,11 +147,34 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { ref, defineComponent } from 'vue'
 import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'ProfilePage',
+  setup () {
+    const scrollAreaRef = ref(null)
+    return {
+      scrollAreaRef,
+
+      scoll (link) {
+        let position
+        this.link = link
+        switch (link) {
+          case 'profile':
+            position = 0
+            break
+          case 'password':
+            position = 0.5005
+            break
+          case 'info':
+            position = 1
+            break
+        }
+        scrollAreaRef.value.setScrollPercentage('vertical', position, 300)
+      }
+    }
+  },
   data () {
     return {
       link: 'profile',
