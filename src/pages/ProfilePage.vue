@@ -3,76 +3,88 @@
     <q-img :fit="'fill'" height="100vh" src="https://getwallpapers.com/wallpaper/full/8/7/3/1089718-one-piece-crew-wallpaper-1920x1080-for-full-hd.jpg">
       <div class="absolute-full flex flex-center">
 
-        <q-btn class="fixed-top-left q-ma-xl" label="Retour" size="xl" icon="arrow_back" color="primary" rounded @click="$router.go(-1)" />
+        <q-btn class="fixed-top-left q-ma-xl z-top" label="Retour" size="xl" icon="arrow_back" color="primary" rounded @click="$router.go(-1)" />
 
-        <div class="q-pa-md flex-center" style="width: 30vw; height: auto; background: rgba(0, 0, 0, 0.7)">
-          <q-list bordered padding class="rounded-borders text-primary">
+        <div class="q-pa-md fixed-bottom-left" style="width: 30vw; height: 100vh; background: rgba(0, 0, 0, 0.7)">
+          <q-list bordered padding class="rounded-borders text-primary absolute-center">
             <q-item
               clickable
               v-ripple
-              @click="link = 'inbox'"
-              active-class="my-menu-link"
-            >
+              @click="link = 'profile'"
+              active-class="my-menu-link" >
               <q-item-section avatar>
-                <q-icon name="inbox" :color="link === 'inbox' ? 'primary' : 'grey'" />
+                <q-icon name="face" :color="link === 'profile' ? '' : 'grey'" />
               </q-item-section>
 
-              <q-item-section class="text-h6">Inbox</q-item-section>
+              <q-item-section class="text-h6">Profile</q-item-section>
             </q-item>
 
             <q-item
               clickable
               v-ripple
-              @click="link = 'outbox'"
-              active-class="my-menu-link"
-            >
+              @click="link = 'password'"
+              active-class="my-menu-link" >
               <q-item-section avatar>
-                <q-icon name="send" :color="link === 'outbox' ? 'primary' : 'grey'" />
+                <q-icon name="vpn_key" :color="link === 'password' ? '' : 'grey'" />
               </q-item-section>
 
-              <q-item-section class="text-h6">Outbox</q-item-section>
+              <q-item-section class="text-h6">Mot de passe</q-item-section>
             </q-item>
 
             <q-item
               clickable
               v-ripple
-              @click="link = 'trash'"
-              active-class="my-menu-link"
-            >
+              @click="link = 'info'"
+              active-class="my-menu-link" >
               <q-item-section avatar>
-                <q-icon name="delete" :color="link === 'trash' ? 'primary' : 'grey'" />
+                <q-icon name="contacts" :color="link === 'info' ? '' : 'grey'" />
               </q-item-section>
 
-              <q-item-section class="text-h6">Trash</q-item-section>
-            </q-item>
-
-            <q-item
-              clickable
-              v-ripple
-              @click="link = 'settings'"
-              active-class="my-menu-link"
-            >
-              <q-item-section avatar>
-                <q-icon name="settings" :color="link === 'settings' ? 'primary' : 'grey'" />
-              </q-item-section>
-
-              <q-item-section class="text-h6">Settings</q-item-section>
-            </q-item>
-
-            <q-item
-              clickable
-              v-ripple
-              @click="link = 'help'"
-              active-class="my-menu-link"
-            >
-              <q-item-section avatar>
-                <q-icon name="help" :color="link === 'help' ? 'primary' : 'grey'" />
-              </q-item-section>
-
-              <q-item-section class="text-h6">Help</q-item-section>
+              <q-item-section class="text-h6">Informations personnels</q-item-section>
             </q-item>
           </q-list>
         </div>
+
+        <q-scroll-area
+          class="text-black fixed-bottom-right"
+          style="height: 1px; min-height: 100vh; min-width: 70vw; background: rgba(0, 0, 0, 0.5)">
+          <div class="q-py-xs q-ma-lg absolute-center">
+            <q-card class="row q-mb-lg" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh">
+              <q-card-section class="col-5">
+                <div class="text-h2 text-bold text-primary absolute-center">Profile</div>
+              </q-card-section>
+              <q-card-section class="bg-white col">
+                <q-form
+                  @submit="onSubmit"
+                  @reset="onReset"
+                  class="q-gutter-md">
+                  <q-input
+                    filled
+                    v-model="name"
+                    label="Your name *"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"/>
+
+                  <q-input
+                    filled
+                    type="number"
+                    v-model="age"
+                    label="Your age *"
+                    lazy-rules
+                    :rules="[
+                      val => val !== null && val !== '' || 'Please type your age',
+                      val => val > 0 && val < 100 || 'Please type a real age'
+                    ]"/>
+
+                  <div>
+                    <q-btn label="Submit" type="submit" color="primary"/>
+                    <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+                  </div>
+                </q-form>
+              </q-card-section>
+            </q-card>
+          </div>
+        </q-scroll-area>
 
       </div>
     </q-img>
@@ -81,21 +93,13 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapActions } from 'vuex'
 
 export default defineComponent({
-  name: 'ConnexionPage',
+  name: 'ProfilePage',
   data () {
     return {
-      user: {
-        email: '',
-        password: ''
-      },
-      link: ''
+      link: 'profile'
     }
-  },
-  methods: {
-    ...mapActions('auth', ['login'])
   }
 })
 </script>
