@@ -58,7 +58,7 @@
                   <q-img
                     class="absolute-center"
                     style="border-radius: 100%;"
-                    :src="getUser.photo === null ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : getUser.photo"
+                    :src="photo === null || photo === '' ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : photo"
                     height="30vh"
                     width="30vh"/>
                 </div>
@@ -68,7 +68,8 @@
                   @reset="onReset"
                   class="q-gutter-md col-5">
                   <div class="absolute-bottom q-mb-lg">
-                    <q-btn class="full-width q-pa-md text-h6" disable label="Sauvegarder" type="submit" color="primary" />
+                    <q-input outlined label="Nouveau lien" v-model="photo" />
+                    <q-btn class="full-width q-pa-md q-ma-lg text-h6" disable label="Sauvegarder" type="submit" color="primary" />
                   </div>
                 </q-form>
 
@@ -158,13 +159,15 @@ export default defineComponent({
   name: 'ProfilePage',
   data () {
     return {
-      link: 'profile'
+      link: 'profile',
+      photo: ''
     }
   },
   computed: {
     ...mapGetters('auth', ['getUser'])
   },
-  mounted () {
+  created () {
+    this.photo = this.getUser.photo
   }
 })
 </script>
