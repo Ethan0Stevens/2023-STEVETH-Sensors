@@ -54,25 +54,19 @@
                 <div class="text-h2 text-bold text-primary absolute-center">Profile</div>
               </q-card-section>
               <q-card-section class="bg-white col column">
-                <div class="col relative-position">
+                <div class="col-9 relative-position">
                   <q-img
                     class="absolute-center"
                     style="border-radius: 100%;"
-                    :src="photo === null || photo === '' ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : photo"
+                    :src="newUserValues.photo === null || newUserValues.photo === '' ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : newUserValues.photo"
                     height="30vh"
                     width="30vh"/>
                 </div>
 
-                <q-form
-                  @submit="onSubmit"
-                  @reset="onReset"
-                  class="q-gutter-md col-5">
-                  <div class="absolute-bottom q-mb-lg">
-                    <q-input outlined label="Nouveau lien" v-model="photo" />
-                    <q-btn class="full-width q-pa-md q-ma-lg text-h6" disable label="Sauvegarder" type="submit" color="primary" />
-                  </div>
-                </q-form>
-
+                <div class="col absolute-bottom q-ma-lg">
+                  <q-input outlined label="Nouveau lien" v-model="newUserValues.photo" />
+                  <q-btn class="full-width q-pa-md q-ma-lg text-h6" label="Sauvegarder" @click="updateUser(newUserValues)" color="primary" />
+                </div>
               </q-card-section>
             </q-card>
             <q-card class="row" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh; margin: 10vh 5vw 10vh 5vw">
@@ -153,21 +147,28 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'ProfilePage',
   data () {
     return {
       link: 'profile',
-      photo: ''
+      newUserValues: {
+        nom: 'Test',
+        prenom: 'Test',
+        photo: ''
+      }
     }
   },
   computed: {
     ...mapGetters('auth', ['getUser'])
   },
+  methods: {
+    ...mapActions('auth', ['updateUser'])
+  },
   created () {
-    this.photo = this.getUser.photo
+    this.newUserValues.photo = this.getUser.photo
   }
 })
 </script>

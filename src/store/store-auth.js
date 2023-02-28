@@ -57,6 +57,22 @@ const actions = {
       })
     Loading.hide()
   },
+  updateUser ({ dispatch, state }, payload) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + state.token }
+    }
+    api
+      .put('updateme', payload, config)
+      .then(response => {
+        dispatch('setUser', response.data)
+      })
+      .catch(error => {
+        afficherMessageErreur('Modification impossible', Object.values(error.response.data))
+      })
+    Loading.hide()
+  },
   setUser ({ commit }, data) {
     commit('SET_USER', data.user)
     commit('SET_TOKEN', data.access_token)
