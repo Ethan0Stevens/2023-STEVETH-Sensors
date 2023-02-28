@@ -48,8 +48,84 @@
         <q-scroll-area
           class="text-black fixed-bottom-right"
           style="height: 1px; min-height: 100vh; min-width: 70vw; background: rgba(0, 0, 0, 0.5)">
-          <div class="q-py-xs q-ma-lg absolute-center">
-            <q-card class="row q-mb-lg" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh">
+          <div class="q-py-xs flex-center">
+            <q-card class="row" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh; margin: 10vh 5vw 10vh 5vw">
+              <q-card-section class="col-5">
+                <div class="text-h2 text-bold text-primary absolute-center">Profile</div>
+              </q-card-section>
+              <q-card-section class="bg-white col">
+                <div>
+                  <q-img
+                    class="block"
+                    style="margin-left: auto; margin-right: auto; border-radius: 100%"
+                    src="https://picsum.photos/500/300"
+                    height="30vh"
+                    width="30vh"/>
+                </div>
+                <q-form
+                  @submit="onSubmit"
+                  @reset="onReset"
+                  class="q-gutter-md">
+                  <q-input
+                    filled
+                    v-model="name"
+                    label="Your name *"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"/>
+
+                  <q-input
+                    filled
+                    type="number"
+                    v-model="age"
+                    label="Your age *"
+                    lazy-rules
+                    :rules="[
+                      val => val !== null && val !== '' || 'Please type your age',
+                      val => val > 0 && val < 100 || 'Please type a real age'
+                    ]"/>
+
+                  <div>
+                    <q-btn label="Submit" type="submit" color="primary"/>
+                    <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+                  </div>
+                </q-form>
+              </q-card-section>
+            </q-card>
+            <q-card class="row" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh; margin: 10vh 5vw 10vh 5vw">
+              <q-card-section class="col-5">
+                <div class="text-h2 text-bold text-primary absolute-center">Profile</div>
+              </q-card-section>
+              <q-card-section class="bg-white col">
+                <q-form
+                  @submit="onSubmit"
+                  @reset="onReset"
+                  class="q-gutter-md">
+                  <q-input
+                    filled
+                    v-model="name"
+                    label="Your name *"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"/>
+
+                  <q-input
+                    filled
+                    type="number"
+                    v-model="age"
+                    label="Your age *"
+                    lazy-rules
+                    :rules="[
+                      val => val !== null && val !== '' || 'Please type your age',
+                      val => val > 0 && val < 100 || 'Please type a real age'
+                    ]"/>
+
+                  <div>
+                    <q-btn label="Submit" type="submit" color="primary"/>
+                    <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+                  </div>
+                </q-form>
+              </q-card-section>
+            </q-card>
+            <q-card class="row" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh; margin: 10vh 5vw 10vh 5vw">
               <q-card-section class="col-5">
                 <div class="text-h2 text-bold text-primary absolute-center">Profile</div>
               </q-card-section>
