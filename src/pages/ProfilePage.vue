@@ -58,9 +58,9 @@
                 <div class="col-6 relative-position">
                   <q-img
                     class="absolute-center"
-                    style="border-radius: 100%; max-width: 15vw"
-                    :src="newUserValues.photo === null || newUserValues.photo === '' ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : newUserValues.photo"
-                    width="100%"/>
+                    style="border-radius: 100%; max-width: 15vw; width: 100%; height: auto"
+                    ratio="1"
+                    :src="newUserValues.photo === null || newUserValues.photo === '' ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : newUserValues.photo"/>
                 </div>
 
                 <div class="col absolute-bottom q-ma-lg column">
@@ -68,74 +68,6 @@
                   <q-input outlined label="Lien photo de profil" v-model="newUserValues.photo" />
                   <q-btn class="full-width q-pa-md q-ma-lg text-h6" :disable="newUserValues.photo === this.getUser.photo" label="Sauvegarder" @click="updateUser(newUserValues)" color="primary" />
                 </div>
-              </q-card-section>
-            </q-card>
-            <q-card class="row" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh; margin: 10vh 5vw 10vh 5vw">
-              <q-card-section class="col-5">
-                <div class="text-h2 text-bold text-primary absolute-center">Profile</div>
-              </q-card-section>
-              <q-card-section class="bg-white col">
-                <q-form
-                  @submit="onSubmit"
-                  @reset="onReset"
-                  class="q-gutter-md">
-                  <q-input
-                    filled
-                    v-model="name"
-                    label="Your name *"
-                    lazy-rules
-                    :rules="[ val => val && val.length > 0 || 'Please type something']"/>
-
-                  <q-input
-                    filled
-                    type="number"
-                    v-model="age"
-                    label="Your age *"
-                    lazy-rules
-                    :rules="[
-                      val => val !== null && val !== '' || 'Please type your age',
-                      val => val > 0 && val < 100 || 'Please type a real age'
-                    ]"/>
-
-                  <div>
-                    <q-btn label="Submit" type="submit" color="primary"/>
-                    <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-                  </div>
-                </q-form>
-              </q-card-section>
-            </q-card>
-            <q-card class="row" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh; margin: 10vh 5vw 10vh 5vw">
-              <q-card-section class="col-5">
-                <div class="text-h2 text-bold text-primary absolute-center">Profile</div>
-              </q-card-section>
-              <q-card-section class="bg-white col">
-                <q-form
-                  @submit="onSubmit"
-                  @reset="onReset"
-                  class="q-gutter-md">
-                  <q-input
-                    filled
-                    v-model="name"
-                    label="Your name *"
-                    lazy-rules
-                    :rules="[ val => val && val.length > 0 || 'Please type something']"/>
-
-                  <q-input
-                    filled
-                    type="number"
-                    v-model="age"
-                    label="Your age *"
-                    lazy-rules
-                    :rules="[
-                      val => val !== null && val !== '' || 'Please type your age',
-                      val => val > 0 && val < 100 || 'Please type a real age'
-                    ]"/>
-
-                  <div>
-                    <q-btn label="Submit" type="submit" color="primary"/>
-                    <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-                  </div>
-                </q-form>
               </q-card-section>
             </q-card>
           </div>
@@ -193,6 +125,7 @@ export default defineComponent({
   },
   created () {
     this.newUserValues.photo = this.getUser.photo
+    console.log(this.getUser)
   }
 })
 </script>

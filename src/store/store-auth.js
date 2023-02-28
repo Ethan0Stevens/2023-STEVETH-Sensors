@@ -32,6 +32,7 @@ const actions = {
       .post('login', payload)
       .then(response => {
         dispatch('setUser', response.data)
+        this.$router.go(-1)
       })
       .catch(error => {
         Loading.hide()
@@ -67,6 +68,7 @@ const actions = {
       .put('updateme', payload, config)
       .then(response => {
         dispatch('setUser', response.data)
+        console.log(response.data)
       })
       .catch(error => {
         afficherMessageErreur('Modification impossible', Object.values(error.response.data))
@@ -76,7 +78,6 @@ const actions = {
   setUser ({ commit }, data) {
     commit('SET_USER', data.user)
     commit('SET_TOKEN', data.access_token)
-    this.$router.go(-1)
     Loading.hide()
   }
 }
