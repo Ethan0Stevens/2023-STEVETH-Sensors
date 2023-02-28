@@ -6,7 +6,6 @@ import { Loading, LocalStorage } from 'quasar'
 const state = {
   user: null,
   token: null
-
 }
 
 /*
@@ -62,7 +61,7 @@ const actions = {
       })
     Loading.hide()
   },
-  updateUser ({ dispatch, state }, payload) {
+  updateUser ({ commit, state }, payload) {
     Loading.show()
     // Configuration du header avec token
     const config = {
@@ -71,7 +70,9 @@ const actions = {
     api
       .put('updateme', payload, config)
       .then(response => {
-        dispatch('setUser', response.data)
+        commit('SET_USER', response.data)
+        LocalStorage.set('user', state.user)
+        console.log(response.data)
       })
       .catch(error => {
         afficherMessageErreur('Modification impossible', Object.values(error.response.data))

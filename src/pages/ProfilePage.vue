@@ -70,6 +70,21 @@
                 </div>
               </q-card-section>
             </q-card>
+            <q-card class="row" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh; margin: 10vh 5vw 10vh 5vw">
+              <q-card-section class="col-5">
+                <div class="text-h2 text-bold text-primary absolute-center text-center full-width">Mot de passe</div>
+              </q-card-section>
+              <q-card-section class="bg-white col">
+                <div class="absolute-center q-ma-lg full-width">
+                  <q-input class="col q-ma-lg" outlined label="Nouveau mot de passe" />
+                  <q-input class="col q-ma-lg" outlined label="Confirmer mot de passe" />
+                  <div class="full-width relative-position row">
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Sauvegarder" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Annuler" color="primary" />
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
           </div>
         </q-scroll-area>
 
@@ -103,7 +118,7 @@ export default defineComponent({
             position = 1
             break
         }
-        scrollAreaRef.value.setScrollPercentage('vertical', position, 300)
+        scrollAreaRef.value.setScrollPercentage('vertical', position, 150)
       }
     }
   },
@@ -113,7 +128,8 @@ export default defineComponent({
       newUserValues: {
         nom: 'Test',
         prenom: 'Test',
-        photo: ''
+        photo: '',
+        password: 'Admlocal1'
       }
     }
   },
@@ -123,7 +139,7 @@ export default defineComponent({
   methods: {
     ...mapActions('auth', ['updateUser'])
   },
-  created () {
+  mounted () {
     this.newUserValues.photo = this.getUser.photo
     console.log(this.getUser)
   }
