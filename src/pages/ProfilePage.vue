@@ -16,7 +16,7 @@
                 <q-icon name="face" :color="link === 'profile' ? '' : 'grey'" />
               </q-item-section>
 
-              <q-item-section class="text-h6">Profile</q-item-section>
+              <q-item-section class="text-h6">Profil</q-item-section>
             </q-item>
 
             <q-item
@@ -51,7 +51,7 @@
           <div class="q-py-xs flex-center">
             <q-card class="row" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh; margin: 10vh 5vw 10vh 5vw">
               <q-card-section class="col-5">
-                <div class="text-h2 text-bold text-primary absolute-center">Profile</div>
+                <div class="text-h2 text-bold text-primary absolute-center">Profil</div>
               </q-card-section>
               <q-card-section class="bg-white col column">
                 <div class="col-9 relative-position">
@@ -63,7 +63,8 @@
                     width="30vh"/>
                 </div>
 
-                <div class="col absolute-bottom q-ma-lg">
+                <div class="col absolute-bottom q-ma-lg column">
+                  <q-btn class="q-ma-lg text-subtitle1" v-if="newUserValues.photo !== this.getUser.photo" label="Annuler" @click="newUserValues.photo = this.getUser.photo" color="primary" />
                   <q-input outlined label="Nouveau lien" v-model="newUserValues.photo" />
                   <q-btn class="full-width q-pa-md q-ma-lg text-h6" label="Sauvegarder" @click="updateUser(newUserValues)" color="primary" />
                 </div>
