@@ -1,7 +1,7 @@
 // State : données du magasin
 import { api } from 'boot/axios'
 import { afficherMessageErreur } from 'src/functions/error-message'
-import { Loading } from 'quasar'
+import { Loading, LocalStorage } from 'quasar'
 
 const state = {
   user: null,
@@ -51,6 +51,10 @@ const actions = {
       .then(
         commit('SET_USER', null),
         commit('SET_TOKEN', null),
+
+        // Vide le locaStorage
+        LocalStorage.clear(),
+
         location.reload()
       )
       .catch(error => {
@@ -68,7 +72,6 @@ const actions = {
       .put('updateme', payload, config)
       .then(response => {
         dispatch('setUser', response.data)
-        console.log(response.data)
       })
       .catch(error => {
         afficherMessageErreur('Modification impossible', Object.values(error.response.data))
@@ -78,6 +81,10 @@ const actions = {
   setUser ({ commit }, data) {
     commit('SET_USER', data.user)
     commit('SET_TOKEN', data.access_token)
+    // Sauvegarde les données de l'utilisateur dans le localStorage
+    LocalStorage.set('user', state.user)
+    LocalStorage.set('token', state.token)
+
     Loading.hide()
   }
 }
