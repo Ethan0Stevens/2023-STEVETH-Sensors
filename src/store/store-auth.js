@@ -6,6 +6,7 @@ import { Loading } from 'quasar'
 const state = {
   user: null,
   token: null
+
 }
 
 /*
@@ -72,6 +73,9 @@ Sert à calculer, trier, filtrer ou formater les donneés
 const getters = {
   userIsLogedIn (state) {
     return state.user != null && state.token != null
+  },
+  getUser (state) {
+    return { ...state.user }
   }
 }
 

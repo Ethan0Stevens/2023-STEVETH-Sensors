@@ -53,42 +53,25 @@
               <q-card-section class="col-5">
                 <div class="text-h2 text-bold text-primary absolute-center">Profile</div>
               </q-card-section>
-              <q-card-section class="bg-white col">
-                <div>
+              <q-card-section class="bg-white col column">
+                <div class="col relative-position">
                   <q-img
-                    class="block"
-                    style="margin-left: auto; margin-right: auto; border-radius: 100%"
-                    src="https://picsum.photos/500/300"
+                    class="absolute-center"
+                    style="border-radius: 100%;"
+                    :src="getUser.photo === null ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : getUser.photo"
                     height="30vh"
                     width="30vh"/>
                 </div>
+
                 <q-form
                   @submit="onSubmit"
                   @reset="onReset"
-                  class="q-gutter-md">
-                  <q-input
-                    filled
-                    v-model="name"
-                    label="Your name *"
-                    lazy-rules
-                    :rules="[ val => val && val.length > 0 || 'Please type something']"/>
-
-                  <q-input
-                    filled
-                    type="number"
-                    v-model="age"
-                    label="Your age *"
-                    lazy-rules
-                    :rules="[
-                      val => val !== null && val !== '' || 'Please type your age',
-                      val => val > 0 && val < 100 || 'Please type a real age'
-                    ]"/>
-
-                  <div>
-                    <q-btn label="Submit" type="submit" color="primary"/>
-                    <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+                  class="q-gutter-md col-5">
+                  <div class="absolute-bottom q-mb-lg">
+                    <q-btn class="full-width q-pa-md text-h6" disable label="Sauvegarder" type="submit" color="primary" />
                   </div>
                 </q-form>
+
               </q-card-section>
             </q-card>
             <q-card class="row" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh; margin: 10vh 5vw 10vh 5vw">
@@ -169,6 +152,7 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'ProfilePage',
@@ -176,6 +160,11 @@ export default defineComponent({
     return {
       link: 'profile'
     }
+  },
+  computed: {
+    ...mapGetters('auth', ['getUser'])
+  },
+  mounted () {
   }
 })
 </script>
