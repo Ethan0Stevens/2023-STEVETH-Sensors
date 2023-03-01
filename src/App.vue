@@ -13,7 +13,7 @@ export default defineComponent({
     ...mapActions('auth', ['setUser'])
   },
   mounted () {
-    LocalStorage.set('favoritesSensors', [])
+    LocalStorage.favorites = []
     // Récupère les données du localStorage
     const user = this.$q.localStorage.getItem('user')
     const token = this.$q.localStorage.getItem('token')

@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <video class="fixed-bottom-right" src="../assets/tree_landscape.mp4" autoplay muted loop />
+    <video class="fixed-bottom" style="min-height: 100%; min-width: 100%; transform: translate(0, 15vh)" src="../assets/tree_landscape.mp4" autoplay muted loop />
     <div class="absolute-full flex flex-center">
       <div class="row absolute-center" v-if="userIsLogedIn">
         <room

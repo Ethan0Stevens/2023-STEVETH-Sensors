@@ -2,7 +2,6 @@
   <q-item class="full-width row">
     <q-expansion-item
       class="text-subtitle1 col"
-      v-if="sensor.salle.id === roomId || roomId === 'all'"
       expand-separator
       icon="sensors"
       :label="sensor.nom" >
@@ -28,8 +27,7 @@ import { LocalStorage } from 'quasar'
 export default defineComponent({
   name: 'SensorComp',
   props: [
-    'sensor',
-    'roomId'
+    'sensor'
   ],
   data () {
     return {
@@ -42,7 +40,10 @@ export default defineComponent({
   methods: {
     makeFavorite () {
       this.isFavorite = !this.isFavorite
-      LocalStorage.set('favoritesSensors', this.$q.localStorage.getItem('favoritesSensors').append(this.sensor))
+      const favorites = LocalStorage.favorites
+      console.log(favorites)
+      favorites.push(this.sensor)
+      LocalStorage.set('favorites', favorites)
     }
   }
 })

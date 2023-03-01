@@ -1,5 +1,5 @@
 <template>
-  <div class="q-ma-lg" :class="!room.showSensors && !showAllRooms ? 'hidden' : ''" ref="morphRef">
+  <div class="q-ma-lg col" :class="!room.showSensors && !showAllRooms ? 'hidden' : ''" ref="morphRef">
     <q-card class="my-card">
       <q-card-section class="bg-accent text-white justify-center">
         <div class="text-h2 text-center">{{ room.nom }}</div>
@@ -16,10 +16,10 @@
         style="height: 1px; min-height: 60vh; min-width: 50vw">
         <div class="q-py-sm q-px-md">
           <q-list bordered padding class="rounded-borders text-primary">
-            <sensor v-for="sensor in getSensors"
-                    :key="sensor.id"
-                    :sensor="sensor"
-                    :roomId="room.id" />
+            <div v-for="sensor in getSensors"
+                 :key="sensor.id" >
+              <sensor v-if="sensor.salle.id === room.id" :sensor="sensor" />
+            </div>
           </q-list>
         </div>
       </q-scroll-area>

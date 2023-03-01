@@ -2,8 +2,8 @@
   <q-layout view="hHh lpR fFf">
 
     <q-header class="bg-primary text-white" elevated >
-      <q-toolbar class="row">
-        <q-btn class="col-1" flat label="Accueil" icon="home" to="/" />
+      <q-toolbar class="row" style="height: 6vh">
+        <q-btn class="col-auto" flat label="Accueil" icon="home" to="/" />
         <!-- <q-separator vertical inset color="secondary" /> -->
         <q-tabs class="col-10" >
           <q-route-tab to="rooms" label="Salles" />
@@ -12,9 +12,9 @@
           <q-route-tab to="favorite" label="Favori" />
         </q-tabs>
 
-        <q-btn v-if="!userIsLogedIn" class="col-1" flat label="Se connecter" icon="login" to="/connexion" />
+        <q-btn v-if="!userIsLogedIn" class="col" flat label="Connexion" icon="login" to="/connexion" />
 
-        <q-btn-dropdown v-else class="col-1" color="secondary" label="Compte" dropdown-icon="arrow_drop_down">
+        <q-btn-dropdown v-else class="col" color="secondary" label="Compte" dropdown-icon="arrow_drop_down">
           <q-list>
             <q-item clickable v-close-popup to="/profile">
               <q-item-section avatar>
