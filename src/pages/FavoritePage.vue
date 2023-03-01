@@ -1,8 +1,8 @@
 <template>
   <q-page>
-    <video class="fixed-bottom-right" src="../assets/one-piece-luffy.mp4" autoplay muted loop />
+    <video class="fixed-bottom-right" src="../assets/water_landscape.mp4" autoplay muted loop />
     <div class="absolute-full flex flex-center" style="background: rgba(0, 0, 0, 0.4)">
-      <div class="row absolute-center">
+      <div class="row absolute-center" v-if="user">
         <q-scroll-area
           class="text-black rounded-borders"
           style="height: 1px; min-height: 90vh; min-width: 50vw; background: rgba(0, 0, 0, 0.6)">
@@ -19,12 +19,14 @@
           </div>
         </q-scroll-area>
       </div>
+      <btn-loged-in v-else />
     </div>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import { mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'FavoritePage',
@@ -34,7 +36,11 @@ export default defineComponent({
     }
   },
   components: {
-    sensor: require('components/Sensor.vue').default
+    sensor: require('components/Sensor.vue').default,
+    btnLogedIn: require('components/BtnErrorLogedIn.vue').default
+  },
+  computed: {
+    ...mapGetters('auth', ['userIsLogedIn'])
   }
 })
 </script>

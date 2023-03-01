@@ -1,16 +1,15 @@
 <template>
   <q-page>
-    <q-img class="fixed-bottom" height="100vh" src="https://imgs.search.brave.com/G7LlHE745NOfPeXKwSUgMduj7eILYifMt9YC0K99jmk/rs:fit:1200:707:1/g:ce/aHR0cDovL2ltZzIu/d2lraWEubm9jb29r/aWUubmV0L19fY2Iy/MDEyMDIxMzEwNTUy/MS9vbmVwaWVjZS1j/YXQvY2EvaW1hZ2Vz/LzMvMzkvSGFiaXRh/Y2lvbm9pc3N1bm55/LnBuZw">
-      <div class="absolute-full flex flex-center">
-        <div class="row absolute-center" v-if="userIsLogedIn">
-          <room
-            v-for="room in getRooms"
-            :key="room.id"
-            :room="room" />
-        </div>
-        <btn-loged-in v-else/>
+    <video class="fixed-bottom-right" src="../assets/tree_landscape.mp4" autoplay muted loop />
+    <div class="absolute-full flex flex-center">
+      <div class="row absolute-center" v-if="userIsLogedIn">
+        <room
+          v-for="room in getRooms"
+          :key="room.id"
+          :room="room" />
       </div>
-    </q-img>
+      <btn-loged-in v-else/>
+    </div>
   </q-page>
 </template>
 
