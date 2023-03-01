@@ -67,7 +67,7 @@
                 <div class="col absolute-bottom q-ma-lg column">
                   <q-btn class="q-ma-lg text-subtitle1" v-if="newUserPicture.photo !== this.getUser.photo" label="Annuler" @click="newUserPicture.photo = this.getUser.photo" color="primary" />
                   <q-input outlined label="Lien photo de profil" v-model="newUserPicture.photo" />
-                  <q-btn class="full-width q-pa-md q-ma-lg text-h6" :disable="newUserPicture.photo === this.getUser.photo" label="Sauvegarder" @click="updateUser(newUserPicture)" color="primary" />
+                  <q-btn class="full-width q-pa-md q-ma-lg text-h6" :disable="newUserPicture.photo === this.getUser.photo" label="Sauvegarder" @click="updateUser(newUserPicture.photo)" color="primary" />
                 </div>
               </q-card-section>
             </q-card>
@@ -179,16 +179,10 @@ export default defineComponent({
       this.newUserInfos.prenom = this.getUser.prenom
       this.newUserInfos.email = this.getUser.email
     },
-    verifyInformations (signe) {
-      if (signe === 'or') {
-        return this.newUserInfos.nom !== this.getUser.nom ||
+    verifyInformations () {
+      return this.newUserInfos.nom !== this.getUser.nom ||
           this.newUserInfos.prenom !== this.getUser.prenom ||
           this.newUserInfos.email !== this.getUser.email
-      } else {
-        return this.newUserInfos.nom !== this.getUser.nom &&
-          this.newUserInfos.prenom !== this.getUser.prenom &&
-          this.newUserInfos.email !== this.getUser.email
-      }
     },
     updateScrollLink ({ verticalPercentage }) {
       if (verticalPercentage < 0.4) {
