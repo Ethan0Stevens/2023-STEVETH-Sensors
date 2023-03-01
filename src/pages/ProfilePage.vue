@@ -46,6 +46,7 @@
         </div>
 
         <q-scroll-area
+          @scroll="updateScrollLink"
           ref="scrollAreaRef"
           class="text-black fixed-bottom-right"
           style="height: 1px; min-height: 100vh; min-width: 70vw; background: rgba(0, 0, 0, 0.5)">
@@ -60,13 +61,13 @@
                     class="absolute-center"
                     style="border-radius: 100%; max-width: 15vw; width: 100%; height: auto"
                     ratio="1"
-                    :src="newUserValues.photo === null || newUserValues.photo === '' ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : newUserValues.photo"/>
+                    :src="newUserPicture.photo === null || newUserPicture.photo === '' ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : newUserPicture.photo"/>
                 </div>
 
                 <div class="col absolute-bottom q-ma-lg column">
-                  <q-btn class="q-ma-lg text-subtitle1" v-if="newUserValues.photo !== this.getUser.photo" label="Annuler" @click="newUserValues.photo = this.getUser.photo" color="primary" />
-                  <q-input outlined label="Lien photo de profil" v-model="newUserValues.photo" />
-                  <q-btn class="full-width q-pa-md q-ma-lg text-h6" :disable="newUserValues.photo === this.getUser.photo" label="Sauvegarder" @click="updateUser(newUserValues)" color="primary" />
+                  <q-btn class="q-ma-lg text-subtitle1" v-if="newUserPicture.photo !== this.getUser.photo" label="Annuler" @click="newUserPicture.photo = this.getUser.photo" color="primary" />
+                  <q-input outlined label="Lien photo de profil" v-model="newUserPicture.photo" />
+                  <q-btn class="full-width q-pa-md q-ma-lg text-h6" :disable="newUserPicture.photo === this.getUser.photo" label="Sauvegarder" @click="updateUser(newUserPicture)" color="primary" />
                 </div>
               </q-card-section>
             </q-card>
@@ -80,11 +81,11 @@
                   {{ error }}
                 </div>
                 <div class="q-ma-lg full-width col-7">
-                  <q-input class="col q-ma-lg" v-model="newUserValues.password" type="password" outlined label="Nouveau mot de passe" />
-                  <q-input class="col q-ma-lg" v-if="newUserValues.password !== ''" v-model="validatePassword" type="password" outlined label="Confirmer mot de passe" />
+                  <q-input class="col q-ma-lg" v-model="newUserPassword.password" type="password" outlined label="Nouveau mot de passe" />
+                  <q-input class="col q-ma-lg" v-if="newUserPassword.password !== ''" v-model="validatePassword" type="password" outlined label="Confirmer mot de passe" />
                   <div class="full-width relative-position row">
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" :disable="newUserValues.password === ''" label="Sauvegarder" @click="resetPassword" color="primary" />
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" v-if="newUserValues.password !== ''" label="Annuler" @click="newUserValues.password = ''; validatePassword = ''; error = ''" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" :disable="newUserPassword.password === ''" label="Sauvegarder" @click="resetPassword" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" v-if="newUserPassword.password !== ''" label="Annuler" @click="newUserPassword.password = ''; validatePassword = ''; error = ''" color="primary" />
                   </div>
                 </div>
               </q-card-section>
@@ -93,17 +94,13 @@
               <q-card-section class="col-5">
                 <div class="text-h2 text-bold text-primary absolute-center text-center full-width">Informations personnels</div>
               </q-card-section>
-              <q-card-section class="bg-white col column">
-                <div class="text-center text-red text-bold text-h6 col justify-center q-mt-lg">
-                  <q-avatar icon="error" v-if="error !== ''"/>
-                  {{ error }}
-                </div>
-                <div class="q-ma-lg full-width col-8">
-                  <q-input class="col q-ma-lg" v-model="this.newUserValues.nom" outlined label="Nom" />
-                  <q-input class="col q-ma-lg" v-model="this.newUserValues.prenom" outlined label="Prenom" />
-                  <q-input class="col q-ma-lg" v-model="this.newUserValues.email" outlined label="E-mail" />
+              <q-card-section class="bg-white col">
+                <div class="q-ma-lg full-width absolute-center">
+                  <q-input class="col q-ma-lg" v-model="this.newUserInfos.nom" outlined label="Nom" />
+                  <q-input class="col q-ma-lg" v-model="this.newUserInfos.prenom" outlined label="Prenom" />
+                  <q-input class="col q-ma-lg" v-model="this.newUserInfos.email" outlined label="E-mail" />
                   <div class="full-width relative-position row">
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Sauvegarder" :disable="!verifyInformations('and')" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Sauvegarder" @click="updateUser(newUserInfos)" :disable="!verifyInformations('and')" color="primary" />
                     <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Annuler" @click="resetInformations" v-if="verifyInformations('or')" color="primary" />
                   </div>
                 </div>
@@ -149,14 +146,18 @@ export default defineComponent({
   data () {
     return {
       link: 'profile',
-      newUserValues: {
-        nom: '',
-        prenom: '',
-        email: '',
-        photo: '',
+      newUserPicture: {
+        photo: ''
+      },
+      newUserPassword: {
         password: ''
       },
       validatePassword: '',
+      newUserInfos: {
+        nom: '',
+        prenom: '',
+        email: ''
+      },
       error: ''
     }
   },
@@ -166,35 +167,44 @@ export default defineComponent({
   methods: {
     ...mapActions('auth', ['updateUser']),
     resetPassword () {
-      if (this.validatePassword !== this.newUserValues.password) {
+      if (this.validatePassword !== this.newUserPassword.password) {
         this.error = 'MOT DE PASSE ET CONFIRMATION DIFFERENTS !'
         return false
       }
       this.error = ''
-      this.updateUser(this.newUserValues)
+      this.updateUser(this.newUserPassword)
     },
     resetInformations () {
-      this.newUserValues.nom = this.getUser.nom
-      this.newUserValues.prenom = this.getUser.prenom
-      this.newUserValues.email = this.getUser.email
+      this.newUserInfos.nom = this.getUser.nom
+      this.newUserInfos.prenom = this.getUser.prenom
+      this.newUserInfos.email = this.getUser.email
     },
     verifyInformations (signe) {
       if (signe === 'or') {
-        return this.newUserValues.nom !== this.getUser.nom ||
-          this.newUserValues.prenom !== this.getUser.prenom ||
-          this.newUserValues.email !== this.getUser.email
+        return this.newUserInfos.nom !== this.getUser.nom ||
+          this.newUserInfos.prenom !== this.getUser.prenom ||
+          this.newUserInfos.email !== this.getUser.email
       } else {
-        return this.newUserValues.nom !== this.getUser.nom &&
-          this.newUserValues.prenom !== this.getUser.prenom &&
-          this.newUserValues.email !== this.getUser.email
+        return this.newUserInfos.nom !== this.getUser.nom &&
+          this.newUserInfos.prenom !== this.getUser.prenom &&
+          this.newUserInfos.email !== this.getUser.email
+      }
+    },
+    updateScrollLink ({ verticalPercentage }) {
+      if (verticalPercentage < 0.4) {
+        this.link = 'profile'
+      } else if (verticalPercentage >= 0.4 && verticalPercentage <= 0.9) {
+        this.link = 'password'
+      } else {
+        this.link = 'info'
       }
     }
   },
   mounted () {
-    this.newUserValues.nom = this.getUser.nom
-    this.newUserValues.prenom = this.getUser.prenom
-    this.newUserValues.email = this.getUser.email
-    this.newUserValues.photo = this.getUser.photo
+    this.newUserInfos.nom = this.getUser.nom
+    this.newUserInfos.prenom = this.getUser.prenom
+    this.newUserInfos.email = this.getUser.email
+    this.newUserPicture.photo = this.getUser.photo
     console.log(this.getUser)
   }
 })
