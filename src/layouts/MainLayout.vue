@@ -8,6 +8,7 @@
         <q-tabs class="col-10" >
           <q-route-tab to="rooms" label="Salles" />
           <q-route-tab to="sensors" label="Capteurs" />
+          <q-route-tab to="admin" label="Admin" />
         </q-tabs>
 
         <q-btn v-if="!userIsLogedIn" class="col-1" flat label="Se connecter" icon="login" to="/connexion" />

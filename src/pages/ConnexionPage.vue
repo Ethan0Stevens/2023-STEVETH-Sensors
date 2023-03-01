@@ -25,8 +25,7 @@
                   filled
                   type="password"
                   label="Mot de passe *"
-                  v-model="user.password"
-                  :rules="[ val => val && val.length > 0 || 'Champ obligatoire']"/>
+                  v-model="user.password"/>
                 <div class="q-pt-xl" align="center" >
                   <q-btn size="lg" icon="arrow_forward" type="submit" color="primary" round />
                 </div>

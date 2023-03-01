@@ -74,13 +74,17 @@
               <q-card-section class="col-5">
                 <div class="text-h2 text-bold text-primary absolute-center text-center full-width">Mot de passe</div>
               </q-card-section>
-              <q-card-section class="bg-white col">
-                <div class="absolute-center q-ma-lg full-width">
-                  <q-input class="col q-ma-lg" outlined label="Nouveau mot de passe" />
-                  <q-input class="col q-ma-lg" outlined label="Confirmer mot de passe" />
+              <q-card-section class="bg-white col column">
+                <div class="text-center text-red text-bold text-h6 col justify-center q-mt-lg">
+                  <q-avatar icon="error" v-if="error !== ''"/>
+                  {{ error }}
+                </div>
+                <div class="q-ma-lg full-width col-7">
+                  <q-input class="col q-ma-lg" v-model="newUserValues.password" type="password" outlined label="Nouveau mot de passe" />
+                  <q-input class="col q-ma-lg" v-if="newUserValues.password !== ''" v-model="validatePassword" type="password" outlined label="Confirmer mot de passe" />
                   <div class="full-width relative-position row">
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Sauvegarder" color="primary" />
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Annuler" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" :disable="newUserValues.password === ''" label="Sauvegarder" @click="resetPassword" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" v-if="newUserValues.password !== ''" label="Annuler" @click="newUserValues.password = ''; validatePassword = ''; error = ''" color="primary" />
                   </div>
                 </div>
               </q-card-section>
@@ -130,14 +134,24 @@ export default defineComponent({
         prenom: 'Test',
         photo: '',
         password: 'Admlocal1'
-      }
+      },
+      validatePassword: '',
+      error: ''
     }
   },
   computed: {
     ...mapGetters('auth', ['getUser'])
   },
   methods: {
-    ...mapActions('auth', ['updateUser'])
+    ...mapActions('auth', ['updateUser']),
+    resetPassword () {
+      if (this.validatePassword !== this.newUserValues.password) {
+        this.error = 'MOT DE PASSE ET CONFIRMATION DIFFERENTS !'
+        return false
+      }
+      this.error = ''
+      this.updateUser(this.newUserValues)
+    }
   },
   mounted () {
     this.newUserValues.photo = this.getUser.photo

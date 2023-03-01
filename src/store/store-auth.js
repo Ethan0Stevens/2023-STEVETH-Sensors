@@ -79,6 +79,24 @@ const actions = {
       })
     Loading.hide()
   },
+  createUser ({ state }, payload) {
+    Loading.show()
+    console.log('Token :', state.token)
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + state.token }
+    }
+    api
+      .post('newuser', payload, config)
+      .then(response => {
+        console.log('Create !', response.data)
+      })
+      .catch(error => {
+        afficherMessageErreur('Creation impossible', Object.values(error.response.data))
+        console.log('Error !', error.response.data)
+      })
+    Loading.hide()
+  },
   setUser ({ commit }, data) {
     commit('SET_USER', data.user)
     commit('SET_TOKEN', data.access_token)
