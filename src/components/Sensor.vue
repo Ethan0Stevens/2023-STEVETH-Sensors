@@ -15,7 +15,7 @@
     </q-expansion-item>
     <q-item-section top side class="col-auto">
       <div class="text-grey-8 q-gutter-xs">
-        <q-btn class="gt-xs" :class="isFavorite ? 'text-yellow' : ''" @click="isFavorite = !isFavorite" size="20px" flat dense round icon="star" />
+        <q-btn class="gt-xs" :class="isFavorite ? 'text-yellow' : ''" @click="makeFavorite" size="20px" flat dense round icon="star" />
       </div>
     </q-item-section>
   </q-item>
@@ -23,6 +23,7 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { LocalStorage } from 'quasar'
 
 export default defineComponent({
   name: 'SensorComp',
@@ -37,6 +38,12 @@ export default defineComponent({
   },
   components: {
     mesure: require('components/Mesure.vue').default
+  },
+  methods: {
+    makeFavorite () {
+      this.isFavorite = !this.isFavorite
+      LocalStorage.set('favoritesSensors', this.$q.localStorage.getItem('favoritesSensors').append(this.sensor))
+    }
   }
 })
 </script>

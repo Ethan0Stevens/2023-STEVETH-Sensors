@@ -5,6 +5,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { mapActions } from 'vuex'
+import { LocalStorage } from 'quasar'
 
 export default defineComponent({
   name: 'App',
@@ -12,6 +13,7 @@ export default defineComponent({
     ...mapActions('auth', ['setUser'])
   },
   mounted () {
+    LocalStorage.set('favoritesSensors', [])
     // Récupère les données du localStorage
     const user = this.$q.localStorage.getItem('user')
     const token = this.$q.localStorage.getItem('token')
