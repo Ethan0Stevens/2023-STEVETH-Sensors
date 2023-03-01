@@ -40,10 +40,27 @@ export default defineComponent({
   methods: {
     makeFavorite () {
       this.isFavorite = !this.isFavorite
-      const favorites = LocalStorage.favorites
-      console.log(favorites)
-      favorites.push(this.sensor)
-      LocalStorage.set('favorites', favorites)
+      let favorites = this.$q.localStorage.getItem('favorites')
+      if (favorites) {
+        if (this.isFavorite) {
+          favorites.push(this.sensor)
+        } else {
+          favorites = favorites.filter(sensor => (sensor.id !== this.sensor.id))
+        }
+        LocalStorage.set('favorites', favorites)
+      }
+    }
+  },
+  mounted () {
+    const sensors = this.$q.localStorage.getItem('favorites')
+    if (sensors) {
+      sensors.forEach(sensor => {
+        if (sensor.id === this.sensor.id) {
+          this.isFavorite = true
+        }
+      })
+    } else {
+      this.isFavorite = false
     }
   }
 })

@@ -4,8 +4,8 @@
       <div class="absolute-full flex flex-center" style="background: rgba(0, 0, 0, 0.4)">
         <div class="row absolute-center" v-if="userIsLogedIn">
           <q-scroll-area
-            class="bg-white text-black rounded-borders"
-            style="height: 1px; min-height: 90vh; min-width: 50vw">
+            class="text-black rounded-borders"
+            style="height: 1px; min-height: 90vh; min-width: 50vw; background: rgba(255, 255, 255, 0.8)">
             <div class="q-py-sm q-px-md">
               <q-list bordered padding class="rounded-borders text-primary">
                 <sensor v-for="sensor in getSensors"
