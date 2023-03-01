@@ -89,6 +89,26 @@
                 </div>
               </q-card-section>
             </q-card>
+            <q-card class="row" style="background: rgba(50, 50, 50, 0.7); width: 60vw; height: 80vh; margin: 10vh 5vw 10vh 5vw">
+              <q-card-section class="col-5">
+                <div class="text-h2 text-bold text-primary absolute-center text-center full-width">Informations personnels</div>
+              </q-card-section>
+              <q-card-section class="bg-white col column">
+                <div class="text-center text-red text-bold text-h6 col justify-center q-mt-lg">
+                  <q-avatar icon="error" v-if="error !== ''"/>
+                  {{ error }}
+                </div>
+                <div class="q-ma-lg full-width col-8">
+                  <q-input class="col q-ma-lg" v-model="this.newUserValues.nom" outlined label="Nom" />
+                  <q-input class="col q-ma-lg" v-model="this.newUserValues.prenom" outlined label="Prenom" />
+                  <q-input class="col q-ma-lg" v-model="this.newUserValues.email" outlined label="E-mail" />
+                  <div class="full-width relative-position row">
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Sauvegarder" :disable="!verifyInformations('and')" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Annuler" @click="resetInformations" v-if="verifyInformations('or')" color="primary" />
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
           </div>
         </q-scroll-area>
 
@@ -130,10 +150,11 @@ export default defineComponent({
     return {
       link: 'profile',
       newUserValues: {
-        nom: 'Test',
-        prenom: 'Test',
+        nom: '',
+        prenom: '',
+        email: '',
         photo: '',
-        password: 'Admlocal1'
+        password: ''
       },
       validatePassword: '',
       error: ''
@@ -151,9 +172,28 @@ export default defineComponent({
       }
       this.error = ''
       this.updateUser(this.newUserValues)
+    },
+    resetInformations () {
+      this.newUserValues.nom = this.getUser.nom
+      this.newUserValues.prenom = this.getUser.prenom
+      this.newUserValues.email = this.getUser.email
+    },
+    verifyInformations (signe) {
+      if (signe === 'or') {
+        return this.newUserValues.nom !== this.getUser.nom ||
+          this.newUserValues.prenom !== this.getUser.prenom ||
+          this.newUserValues.email !== this.getUser.email
+      } else {
+        return this.newUserValues.nom !== this.getUser.nom &&
+          this.newUserValues.prenom !== this.getUser.prenom &&
+          this.newUserValues.email !== this.getUser.email
+      }
     }
   },
   mounted () {
+    this.newUserValues.nom = this.getUser.nom
+    this.newUserValues.prenom = this.getUser.prenom
+    this.newUserValues.email = this.getUser.email
     this.newUserValues.photo = this.getUser.photo
     console.log(this.getUser)
   }
