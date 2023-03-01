@@ -59,11 +59,10 @@
                 <div class="col-6 relative-position">
                   <q-img
                     class="absolute-center"
-                    style="border-radius: 100%; max-width: 15vw; width: 100%; height: auto"
+                    style="border-radius: 100%; max-width: 15vw; width: 100%; height: auto;"
                     ratio="1"
                     :src="newUserPicture.photo === null || newUserPicture.photo === '' ? 'https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png' : newUserPicture.photo"/>
                 </div>
-
                 <div class="col absolute-bottom q-ma-lg column">
                   <q-btn class="q-ma-lg text-subtitle1" v-if="newUserPicture.photo !== this.getUser.photo" label="Annuler" @click="newUserPicture.photo = this.getUser.photo" color="primary" />
                   <q-input outlined label="Lien photo de profil" v-model="newUserPicture.photo" />

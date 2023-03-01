@@ -1,5 +1,5 @@
 <template>
-  <div class="q-ma-lg col" :class="!room.showSensors && !showAllRooms ? 'hidden' : ''" ref="morphRef">
+  <div class="q-ma-lg" style="" :class="!room.showSensors && !showAllRooms ? 'hidden' : ''" ref="morphRef">
     <q-card class="my-card">
       <q-card-section class="bg-accent text-white justify-center">
         <div class="text-h2 text-center">{{ room.nom }}</div>

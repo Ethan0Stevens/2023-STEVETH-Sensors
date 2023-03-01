@@ -5,8 +5,8 @@
 
         <q-btn class="fixed-top-left q-ma-xl" label="Retour" size="xl" icon="arrow_back" color="primary" rounded @click="$router.go(-1)" />
 
-        <q-card class="my-card">
-          <div class="q-pa-xl">
+        <q-card class="my-card" style="width: 30vw">
+          <div class="q-pt-xl">
 
             <q-card-section>
               <div class="text-bold text-black text-h3" align="center">Connexion</div>
@@ -16,6 +16,7 @@
             <q-card-section>
               <q-form @submit="login(user)">
                 <q-input
+                  class="q-my-sm"
                   filled
                   type="email"
                   label="Adresse e-mail *"

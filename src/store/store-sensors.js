@@ -19,6 +19,9 @@ const mutations = {
     state.rooms = []
     rooms.forEach(room => (state.rooms.push({ ...room, showSensors: false })))
   },
+  ADD_ROOM (state, room) {
+    state.rooms.push(room)
+  },
   SHOW_SENSORS (state, room) {
     // Recherche la salle et retourne sa position dans le tableau, son index
     const index = state.rooms.findIndex(el => el.id === room.id)
@@ -55,6 +58,20 @@ const actions = {
     api
       .get('salles', config)
       .then(response => commit('SET_ROOMS', response.data))
+      .catch(error => console.log(error.response))
+    Loading.hide()
+  },
+  addRoom ({ commit, rootState }, payload) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + rootState.auth.token }
+    }
+    api
+      .post('salles', payload, config)
+      .then(response => {
+        commit('ADD_ROOM', response.data)
+      })
       .catch(error => console.log(error.response))
     Loading.hide()
   },
