@@ -25,8 +25,6 @@
         </div>
       </q-scroll-area>
       <div v-else-if="toggle" class="text-h4 text-primary q-pa-xl" style="margin-bottom: 10vh">Pas de capteur dans la salle</div>
-
-      <q-btn class="bg-primary fixed-right q-mr-lg" style="height: 50vh;margin-bottom: auto; margin-top: auto" icon="add" rounded size="17px" @click="clickAdd = true" v-if="getUser.is_admin && showAllRooms"/>
     </q-card>
   </div>
 </template>

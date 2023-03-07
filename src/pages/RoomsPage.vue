@@ -2,15 +2,18 @@
   <q-page>
     <video class="fixed-bottom" style="min-height: 100%; min-width: 100%; transform: translate(0, 15vh)" src="../assets/tree_landscape.mp4" autoplay muted loop />
     <div class="absolute-full flex flex-center">
-      <q-scroll-area class="absolute-top" style="height: 90vh; width: 85vw; margin-left: auto; margin-right: auto">
+      <q-scroll-area class="absolute-top" style="height: 90vh; width: 85vw; margin-left: auto; margin-right: auto" v-if="getRooms.length > 0">
         <div class="row justify-center" v-if="userIsLogedIn">
           <room
             v-for="room in getRooms"
             :key="room.id"
             :room="room" />
         </div>
-        <btn-loged-in v-else/>
       </q-scroll-area>
+      <btn-loged-in v-else-if="!userIsLogedIn"/>
+      <div class="rounded-borders" style="height: 80vh; width: 65vw; background: rgba(255, 255, 255, 0.7);" v-else-if="getRooms.length === 0 && userIsLogedIn">
+        <div class="text-h2 text-bold text-primary absolute-center full-width text-center">Aucune salle existante</div>
+      </div>
       <q-btn class="bg-primary fixed-right q-mr-lg" style="height: 50vh;margin-bottom: auto; margin-top: auto" icon="add" rounded size="17px" @click="clickAdd = true" v-if="getUser.is_admin && showAllRooms"/>
       <q-dialog v-model="clickAdd">
         <q-card class="my-card full-width">
