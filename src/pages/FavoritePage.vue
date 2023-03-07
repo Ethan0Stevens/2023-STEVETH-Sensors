@@ -5,7 +5,7 @@
         <div class="row absolute-center" v-if="userIsLogedIn">
           <q-scroll-area
             class="text-black rounded-borders"
-            style="height: 1px; min-height: 90vh; min-width: 50vw; background: rgba(255, 255, 255, 0.7)">
+            style="height: 1px; min-height: 80vh; min-width: 65vw; background: rgba(255, 255, 255, 0.7)">
             <div class="q-py-sm q-px-md" v-if="favorites.length > 0">
               <q-list bordered padding class="rounded-borders text-primary">
                 <sensor v-for="sensor in favorites"

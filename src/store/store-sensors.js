@@ -75,6 +75,18 @@ const actions = {
       .catch(error => console.log(error.response))
     Loading.hide()
   },
+  deleteRoom ({ commit, rootState }, id) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + rootState.auth.token }
+    }
+    api
+      .delete('salles/' + id, config)
+      .then(location.reload())
+      .catch(error => console.log(error.response))
+    Loading.hide()
+  },
   showSensors ({ commit }, room) {
     commit('SHOW_SENSORS', room)
   }
