@@ -21,7 +21,7 @@ export default defineComponent({
     if (user && token) {
       // Construction de l'objet data
       const data = {
-        user: user,
+        user,
         access_token: token
       }
       // Définit l'utilisateur en cours

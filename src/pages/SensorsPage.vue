@@ -1,11 +1,11 @@
 <template>
   <q-page>
     <video class="fixed-bottom" style="min-height: 100%; min-width: 100%; transform: translate(0, 15vh)" src="../assets/one-piece-luffy.mp4" autoplay muted loop />
-      <div class="absolute-full flex flex-center" style="background: rgba(0, 0, 0, 0.4)">
-        <div class="row absolute-center" v-if="userIsLogedIn">
+      <div class="absolute-full flex flex-center row" style="background: rgba(0, 0, 0, 0.4)">
+        <div class="row col" v-if="userIsLogedIn">
           <q-scroll-area
-            class="text-black rounded-borders"
-            style="height: 1px; min-height: 80vh; min-width: 65vw; background: rgba(255, 255, 255, 0.8)">
+            class="text-black rounded-borders q-ml-xl"
+            style="height: 1px; min-height: 80vh; min-width: 62vw; background: rgba(255, 255, 255, 0.8)">
             <div class="q-py-sm q-px-md">
               <q-list bordered padding class="rounded-borders text-primary">
                 <sensor v-for="sensor in getSensors"
@@ -17,6 +17,10 @@
           </q-scroll-area>
         </div>
         <btn-loged-in v-else />
+        <div class="col-auto column q-mr-xl" style="background: rgba(0,0,0,0.8)">
+          <div class="col text-center text-h6 q-my-lg text-primary text-bold">Graphique des dernières mesures de tous les capteurs</div>
+          <chart class="col-auto" :temp="[42, 31, 45, 10]" :humidite="[20, 21, 19, 50]" :size="getSensors.length"/>
+        </div>
       </div>
   </q-page>
 </template>
@@ -29,7 +33,8 @@ export default defineComponent({
   name: 'RoomsPage',
   components: {
     sensor: require('components/Sensor.vue').default,
-    btnLogedIn: require('components/BtnErrorLogedIn.vue').default
+    btnLogedIn: require('components/BtnErrorLogedIn.vue').default,
+    chart: require('components/Chart.vue').default
   },
   computed: {
     ...mapGetters('sensors', ['getSensors']),

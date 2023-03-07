@@ -1,11 +1,12 @@
 <template>
-  <q-item class="full-width row">
+  <q-item class="full-width row text-center">
     <q-expansion-item
       class="text-subtitle1 col"
       expand-separator
       icon="sensors"
       :label="sensor.nom" >
       <div class="row justify-center">
+        <chart :temp="getTemperatures" :humidite="getHumidite" :size="10" :id="sensor.id" />
         <mesure v-for="mesure in sensor.mesures"
                 :key="mesure.id"
                 :mesure="mesure">
@@ -35,7 +36,24 @@ export default defineComponent({
     }
   },
   components: {
-    mesure: require('components/Mesure.vue').default
+    mesure: require('components/Mesure.vue').default,
+    chart: require('components/Chart.vue').default
+  },
+  computed: {
+    getTemperatures () {
+      const temp = []
+      this.sensor.mesures.forEach(mesure => {
+        temp.push(mesure.temperature)
+      })
+      return temp
+    },
+    getHumidite () {
+      const humi = []
+      this.sensor.mesures.forEach(mesure => {
+        humi.push(mesure.humidite)
+      })
+      return humi
+    }
   },
   methods: {
     makeFavorite () {
