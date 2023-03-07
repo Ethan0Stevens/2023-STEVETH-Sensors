@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 30vw; height: 30vh; background: rgba(255, 255, 255, 0.8)">
+  <div style="min-width: 30vw; min-height: 30vh; background: rgba(255, 255, 255, 0.8)">
     <canvas class="full-width full-height"  :id="id"></canvas>
   </div>
 </template>

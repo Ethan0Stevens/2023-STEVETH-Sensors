@@ -4,8 +4,8 @@
       <div class="absolute-full flex flex-center row" style="background: rgba(0, 0, 0, 0.4)">
         <div class="row col" v-if="userIsLogedIn">
           <q-scroll-area
-            class="text-black rounded-borders q-ml-xl"
-            style="height: 1px; min-height: 80vh; min-width: 62vw; background: rgba(255, 255, 255, 0.8)">
+            class="text-black rounded-borders q-ml-xl col"
+            style="min-height: 80vh; max-width: 62vw; background: rgba(255, 255, 255, 0.8)">
             <div class="q-py-sm q-px-md">
               <q-list bordered padding class="rounded-borders text-primary">
                 <sensor v-for="sensor in getSensors"
@@ -15,12 +15,12 @@
               </q-list>
             </div>
           </q-scroll-area>
+          <div class="q-mx-xl justify-center col-4" style="background: rgba(0,0,0,0.8); margin-top: auto; margin-bottom: auto">
+            <div class="text-center text-h6 q-my-lg text-primary text-bold">Graphique de la dernière mesure de tous les capteurs</div>
+            <chart :temp="getTemperatures" :humidite="getHumidite" :size="getSensors.length" :id="'all'"/>
+          </div>
         </div>
         <btn-loged-in v-else />
-        <div class="col-auto column q-mr-xl" style="background: rgba(0,0,0,0.8)">
-          <div class="col text-center text-h6 q-my-lg text-primary text-bold">Graphique de la dernière mesure de tous les capteurs</div>
-          <chart class="col-auto" :temp="getTemperatures" :humidite="getHumidite" :size="getSensors.length" :id="'all'"/>
-        </div>
       </div>
   </q-page>
 </template>

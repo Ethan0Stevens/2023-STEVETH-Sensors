@@ -13,7 +13,7 @@
 
       <q-scroll-area
         class="bg-white text-black rounded-borders"
-        v-if="toggle"
+        v-if="toggle && getSensors"
         style="height: 1px; min-height: 69vh; min-width: 65vw">
         <div class="q-py-sm q-px-md">
           <q-list bordered padding class="rounded-borders text-primary">
