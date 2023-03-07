@@ -24,6 +24,8 @@
           </q-list>
         </div>
       </q-scroll-area>
+
+      <q-btn class="bg-primary fixed-right q-mr-lg" style="height: 50vh;margin-bottom: auto; margin-top: auto" icon="add" rounded size="17px" @click="clickAdd = true" v-if="getUser.is_admin && showAllRooms"/>
     </q-card>
   </div>
 </template>
@@ -72,7 +74,8 @@ export default defineComponent({
     ...mapActions('sensors', ['showSensors', 'getApiSensors', 'deleteRoom'])
   },
   computed: {
-    ...mapGetters('sensors', ['showAllRooms', 'getSensors'])
+    ...mapGetters('sensors', ['showAllRooms', 'getSensors']),
+    ...mapGetters('auth', ['getUser'])
   },
   created () {
     this.getApiSensors()
