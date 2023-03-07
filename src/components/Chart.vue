@@ -23,25 +23,26 @@ export default defineComponent({
       data: {
         labels: [...Array(this.size).keys()],
         datasets: [{
-          label: 'Humidité',
+          label: 'Humidité [ % ]',
           data: this.humidite,
           fill: true,
           borderColor: '#F50057FF',
-          tension: 0.4
+          tension: 0.4,
+          pointHoverRadius: 10
         },
         {
-          label: 'Temperature',
+          label: 'Temperature[ °C ]',
           data: this.temp,
           fill: true,
           borderColor: 'rgb(72,211,187)',
-          tension: 0.4
+          tension: 0.4,
+          pointHoverRadius: 10
         }]
       },
       options: {
-        indexAxis: 'x',
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: false
           }
         }
       }

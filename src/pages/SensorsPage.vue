@@ -18,8 +18,8 @@
         </div>
         <btn-loged-in v-else />
         <div class="col-auto column q-mr-xl" style="background: rgba(0,0,0,0.8)">
-          <div class="col text-center text-h6 q-my-lg text-primary text-bold">Graphique des dernières mesures de tous les capteurs</div>
-          <chart class="col-auto" :temp="[42, 31, 45, 10]" :humidite="[20, 21, 19, 50]" :size="getSensors.length"/>
+          <div class="col text-center text-h6 q-my-lg text-primary text-bold">Graphique de la dernière mesure de tous les capteurs</div>
+          <chart class="col-auto" :temp="getTemperatures" :humidite="getHumidite" :size="getSensors.length" :id="'all'"/>
         </div>
       </div>
   </q-page>
@@ -38,7 +38,21 @@ export default defineComponent({
   },
   computed: {
     ...mapGetters('sensors', ['getSensors']),
-    ...mapGetters('auth', ['userIsLogedIn'])
+    ...mapGetters('auth', ['userIsLogedIn']),
+    getTemperatures () {
+      const temp = []
+      this.getSensors.forEach(sensor => {
+        temp.push(sensor.mesures.at(0).temperature)
+      })
+      return temp
+    },
+    getHumidite () {
+      const temp = []
+      this.getSensors.forEach(sensor => {
+        temp.push(sensor.mesures.at(0).humidite)
+      })
+      return temp
+    }
   },
   methods: {
     ...mapActions('sensors', ['getApiSensors'])

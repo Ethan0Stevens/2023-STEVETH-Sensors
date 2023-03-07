@@ -5,8 +5,10 @@
       expand-separator
       icon="sensors"
       :label="sensor.nom" >
+      <div class="full-width">
+        <chart class="q-mt-lg" style="margin-left: auto; margin-right: auto" :temp="getTemperatures" :humidite="getHumidite" :size="10" :id="sensor.id" />
+      </div>
       <div class="row justify-center">
-        <chart :temp="getTemperatures" :humidite="getHumidite" :size="10" :id="sensor.id" />
         <mesure v-for="mesure in sensor.mesures"
                 :key="mesure.id"
                 :mesure="mesure">
