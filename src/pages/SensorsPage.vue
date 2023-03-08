@@ -2,11 +2,11 @@
   <q-page>
     <video class="fixed-bottom" style="min-height: 100%; min-width: 100%; transform: translate(0, 15vh)" src="../assets/one-piece-luffy.mp4" autoplay muted loop />
       <div class="absolute-full flex flex-center row" style="background: rgba(0, 0, 0, 0.4)">
-        <div class="row col" v-if="userIsLogedIn">
+        <div class="row col justify-center" v-if="userIsLogedIn">
           <q-scroll-area
             class="text-black rounded-borders q-ml-xl col"
             style="min-height: 80vh; max-width: 62vw; background: rgba(255, 255, 255, 0.8)">
-            <div class="q-py-sm q-px-md">
+            <div class="q-py-sm q-px-md" v-if="getSensors.length > 0">
               <q-list bordered padding class="rounded-borders text-primary">
                 <sensor v-for="sensor in getSensors"
                         :key="sensor.id"
@@ -14,8 +14,11 @@
                         roomId="all" />
               </q-list>
             </div>
+            <div class="text-h2 text-bold text-primary text-center absolute-center full-width" v-else>
+              Aucun capteur
+            </div>
           </q-scroll-area>
-          <div class="q-mx-xl justify-center col-4" style="background: rgba(0,0,0,0.8); margin-top: auto; margin-bottom: auto">
+          <div class="q-mx-xl justify-center col-4" v-if="getSensors.length > 0" style="background: rgba(0,0,0,0.8); margin-top: auto; margin-bottom: auto">
             <div class="text-center text-h6 q-my-lg text-primary text-bold">Graphique de la dernière mesure de tous les capteurs</div>
             <chart :temp="getTemperatures" :humidite="getHumidite" :size="getSensors.length" :id="'all'"/>
           </div>

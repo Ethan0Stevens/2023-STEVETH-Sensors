@@ -1,6 +1,7 @@
 // State : données du magasin
 import { api } from 'boot/axios'
 import { Loading } from 'quasar'
+import { afficherMessageErreur } from 'src/functions/error-message'
 
 const state = {
   rooms: [],
@@ -47,7 +48,7 @@ const actions = {
     api
       .get('capteurs', config)
       .then(response => commit('SET_SENSORS', response.data))
-      .catch(error => console.log(error.response))
+      .catch(error => afficherMessageErreur("Erreur de connexion a l'api", Object.values(error.response.data)))
   },
   getApiRooms ({ commit, rootState }) {
     Loading.show()
@@ -58,7 +59,7 @@ const actions = {
     api
       .get('salles', config)
       .then(response => commit('SET_ROOMS', response.data))
-      .catch(error => console.log(error.response))
+      .catch(error => afficherMessageErreur("Erreur de connexion a l'api", Object.values(error.response.data)))
     Loading.hide()
   },
   addRoom ({ commit, rootState }, payload) {
