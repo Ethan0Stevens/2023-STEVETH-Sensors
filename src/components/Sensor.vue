@@ -1,12 +1,12 @@
 <template>
-  <q-item class="full-width row text-center">
+  <q-item class="full-width row text-center" v-if="roomId === sensor.salle.id">
     <q-expansion-item
       class="text-subtitle1 col"
       expand-separator
       icon="sensors"
       :label="sensor.nom" >
-      <div class="full-width">
-        <chart class="q-mt-lg" style="margin-left: auto; margin-right: auto" :temp="getTemperatures" :humidite="getHumidite" :size="10" :id="sensor.id" />
+      <div>
+        <chart class="q-my-lg" style="width: 30vw; margin-left: auto; margin-right: auto" :temp="getTemperatures" :humidite="getHumidite" :size="10" :id="sensor.id" />
       </div>
       <div class="row justify-center">
         <mesure v-for="mesure in sensor.mesures"
@@ -30,7 +30,8 @@ import { LocalStorage } from 'quasar'
 export default defineComponent({
   name: 'SensorComp',
   props: [
-    'sensor'
+    'sensor',
+    'roomId'
   ],
   data () {
     // Creation des variables

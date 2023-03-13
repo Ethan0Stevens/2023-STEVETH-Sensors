@@ -31,7 +31,7 @@ export default defineComponent({
           fill: true,
           borderColor: '#F50057FF',
           tension: 0.4,
-          pointHoverRadius: 10
+          pointHoverRadius: 6
         },
         {
           label: 'Temperature[ °C ]',
@@ -39,7 +39,7 @@ export default defineComponent({
           fill: true,
           borderColor: 'rgb(72,211,187)',
           tension: 0.4,
-          pointHoverRadius: 10
+          pointHoverRadius: 7
         }]
       },
       options: {

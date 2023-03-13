@@ -16,7 +16,7 @@
         navigation
         padding
         arrows
-        style="height: 80vh; width: 80vw"
+        style="height: 88vh; width: 85vw"
         class="bg-white text-primary shadow-1 rounded-borders">
 
         <q-carousel-slide :name="room.id" class="column flex-center" v-for="room in getRooms" :key="room.id">
