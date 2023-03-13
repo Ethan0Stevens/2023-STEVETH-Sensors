@@ -14,14 +14,13 @@
             <div class="row q-ma-lg text-center">
               <div class="col">
                 <q-icon name="sunny" size="40px"></q-icon>
-                0 °C
+                {{ lastMesure.temperature }} °C
               </div>
               <div class="col">
                 <q-icon name="water_drop" size="40px"></q-icon>
-                100 %
+                {{ lastMesure.humidite }} %
               </div>
             </div>
-            <div class="q-mt-xl"> 19-06-2004  </div>
           </q-card-section>
         </q-card>
       </div>
@@ -63,6 +62,15 @@ import { mapActions, mapGetters } from 'vuex'
 export default defineComponent({
   name: 'RoomComp',
   props: ['room'],
+  data () {
+    return {
+      lastMesure: {
+        id: -1,
+        temperature: 0,
+        humidite: 0
+      }
+    }
+  },
   components: {
     // Initialisation des composants
     sensor: require('components/Sensor.vue').default
@@ -80,6 +88,7 @@ export default defineComponent({
       let count = 0
       this.getSensors.forEach(sensor => {
         if (sensor.salle.id === this.room.id) {
+          this.setLastMesure(sensor.mesures.at(0))
           count++
         }
       })
@@ -88,13 +97,23 @@ export default defineComponent({
   },
   methods: {
     // Mappage des actions des magasins
-    ...mapActions('sensors', ['showSensors', 'getApiSensors', 'deleteRoom'])
+    ...mapActions('sensors', ['showSensors', 'getApiSensors', 'deleteRoom']),
+    setLastMesure () {
+      this.getSensors.forEach(sensor => {
+        if (sensor.salle.id === this.room.id) {
+          if (this.lastMesure.id < sensor.mesures[0].id) {
+            this.lastMesure = sensor.mesures[0]
+          }
+        }
+      })
+    }
   },
   created () {
     // Code executé a la creation de la page
     // si l'utilisateur est connecté, alors appele les capteurs depuis l'API
     if (this.userIsLogedIn) {
       this.getApiSensors()
+      this.setLastMesure()
     }
   }
 })

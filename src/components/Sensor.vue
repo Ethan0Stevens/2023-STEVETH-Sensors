@@ -1,5 +1,5 @@
 <template>
-  <q-item class="full-width row text-center" v-if="roomId === sensor.salle.id">
+  <q-item class="full-width row text-center" v-if="roomId === sensor.salle.id || roomId === 'all'">
     <q-expansion-item
       class="text-subtitle1 col"
       expand-separator
