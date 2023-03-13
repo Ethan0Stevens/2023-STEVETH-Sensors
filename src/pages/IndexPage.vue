@@ -19,9 +19,36 @@
         class="bg-white text-primary shadow-1 rounded-borders">
 
         <q-carousel-slide name="style" class="column flex-center">
-          <q-icon name="style" size="56px" />
-          <div class="q-mt-md text-center">
-            B1-01
+          <div class="text-center row full-width">
+            <div class="col full-height">
+              <div class="text-h1 q-mb-xl">
+                B1-01
+              </div>
+              <div class="text-h6">
+                <q-card bordered class="my-card q-ma-lg">
+                  <q-card-section>
+                    <div class="text-h6 text-center">Dernière mesure</div>
+                  </q-card-section>
+                  <q-separator/>
+                  <q-card-section class="text-black">
+                    <div class="row q-ma-lg text-center">
+                      <div class="col">
+                        <q-icon name="sunny" size="40px"></q-icon>
+                        0 °C
+                      </div>
+                      <div class="col">
+                        <q-icon name="water_drop" size="40px"></q-icon>
+                        100 %
+                      </div>
+                    </div>
+                    <div class="q-mt-xl"> 19-06-2004  </div>
+                  </q-card-section>
+                </q-card>
+              </div>
+            </div>
+            <div class="col relative-position">
+              <q-btn class="absolute-center" icon="keyboard_double_arrow_down" label="Afficher capteurs" size="20px"></q-btn>
+            </div>
           </div>
         </q-carousel-slide>
 

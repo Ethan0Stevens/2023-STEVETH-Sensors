@@ -1,31 +1,34 @@
 <template>
-  <div class="q-ma-lg" :class="!room.showSensors && !showAllRooms ? 'hidden' : ''" ref="morphRef">
-    <q-card class="my-card">
-      <q-card-section class="bg-accent text-white justify-center">
-        <div class="text-h2 text-center">{{ room.nom }}</div>
-        <q-btn @click="deleteRoom(this.room.id)" v-if="false" label="Supprimer"></q-btn>
-      </q-card-section>
-
-      <q-card-actions vertical align="center">
-        <q-btn class="text-black" v-if="toggle" flat icon="keyboard_double_arrow_up" @click="morphContent(room)">Cacher capteurs</q-btn>
-        <q-btn class="text-black" v-else flat icon="keyboard_double_arrow_down" @click="morphContent(room)">Afficher capteurs</q-btn>
-      </q-card-actions>
-
-      <q-scroll-area
-        class="bg-white text-black rounded-borders"
-        v-if="toggle && sensorInTheRoom"
-        style="height: 1px; min-height: 69vh; min-width: 65vw">
-        <div class="q-py-sm q-px-md">
-          <q-list bordered padding class="rounded-borders text-primary">
-            <div v-for="sensor in getSensors"
-                 :key="sensor.id" >
-              <sensor v-if="sensor.salle.id === room.id" :sensor="sensor" />
+  <div class="text-center row full-width">
+    <div class="col full-height">
+      <div class="text-h1 q-mb-xl">
+        {{ room.nom }}
+      </div>
+      <div class="text-h6">
+        <q-card bordered class="my-card q-ma-lg">
+          <q-card-section>
+            <div class="text-h6 text-center">{{ room.nom }}</div>
+          </q-card-section>
+          <q-separator/>
+          <q-card-section class="text-black">
+            <div class="row q-ma-lg text-center">
+              <div class="col">
+                <q-icon name="sunny" size="40px"></q-icon>
+                0 °C
+              </div>
+              <div class="col">
+                <q-icon name="water_drop" size="40px"></q-icon>
+                100 %
+              </div>
             </div>
-          </q-list>
-        </div>
-      </q-scroll-area>
-      <div v-else-if="toggle" class="text-h4 text-primary q-pa-xl" style="margin-bottom: 10vh">Pas de capteur dans la salle</div>
-    </q-card>
+            <div class="q-mt-xl"> 19-06-2004  </div>
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
+    <div class="col relative-position">
+      <q-btn class="absolute-center" icon="keyboard_double_arrow_down" label="Afficher capteurs" size="20px"></q-btn>
+    </div>
   </div>
 </template>
 
@@ -72,7 +75,6 @@ export default defineComponent({
   },
   components: {
     // Initialisation des composants
-    sensor: require('components/Sensor.vue').default
   },
   computed: {
     // Mappage des getters des magasins
@@ -103,6 +105,7 @@ export default defineComponent({
     if (this.userIsLogedIn) {
       this.getApiSensors()
     }
+    console.log(this.room.id)
   }
 })
 </script>
