@@ -32,19 +32,23 @@ export default defineComponent({
   name: 'FavoritePage',
   data () {
     return {
+      // Creation des variables
       favorites: {}
     }
   },
   components: {
+    // Initialisation des composants
     sensor: require('components/Sensor.vue').default,
     btnLogedIn: require('components/BtnErrorLogedIn.vue').default
   },
   computed: {
+    // Mappage des getters des magasins
     ...mapGetters('auth', ['userIsLogedIn'])
   },
   mounted () {
+    // Code executé au montage de la page
+    // Recupere la liste des favorits dans le LocalStorage
     this.favorites = this.$q.localStorage.getItem('favorites')
-    console.log(this.favorites)
   }
 })
 </script>

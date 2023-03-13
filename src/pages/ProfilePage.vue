@@ -83,7 +83,7 @@
                   <q-input class="col q-ma-lg" v-model="newUserPassword.password" type="password" outlined label="Nouveau mot de passe" />
                   <q-input class="col q-ma-lg" v-if="newUserPassword.password !== ''" v-model="validatePassword" type="password" outlined label="Confirmer mot de passe" />
                   <div class="full-width relative-position row">
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" :disable="newUserPassword.password === ''" label="Sauvegarder" @click="resetPassword" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" :disable="newUserPassword.password === ''" label="Sauvegarder" @click="verifiyPassword" color="primary" />
                     <q-btn class="q-pa-md q-ma-lg text-h6 col" v-if="newUserPassword.password !== ''" label="Annuler" @click="newUserPassword.password = ''; validatePassword = ''; error = ''" color="primary" />
                   </div>
                 </div>
@@ -99,8 +99,8 @@
                   <q-input class="col q-ma-lg" v-model="this.newUserInfos.prenom" outlined label="Prenom" />
                   <q-input class="col q-ma-lg" v-model="this.newUserInfos.email" outlined label="E-mail" />
                   <div class="full-width relative-position row">
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Sauvegarder" @click="updateUser(newUserInfos)" :disable="!verifyInformations('and')" color="primary" />
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Annuler" @click="resetInformations" v-if="verifyInformations('or')" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Sauvegarder" @click="updateUser(newUserInfos)" :disable="!verifyInformations" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Annuler" @click="resetInformations" v-if="verifyInformations" color="primary" />
                   </div>
                 </div>
               </q-card-section>
@@ -124,6 +124,10 @@ export default defineComponent({
     return {
       scrollAreaRef,
 
+      /**
+       * scroll la zone de scroll en fonction du lien cliqué
+       * @param link lien cliqué
+       */
       scoll (link) {
         let position
         this.link = link
@@ -144,6 +148,7 @@ export default defineComponent({
   },
   data () {
     return {
+      // Creation des variables
       link: 'profile',
       newUserPicture: {
         photo: ''
@@ -161,28 +166,45 @@ export default defineComponent({
     }
   },
   computed: {
+    // Mappage des getters des magasins
     ...mapGetters('auth', ['getUser'])
   },
   methods: {
+    // Mappage des actions des magasins
     ...mapActions('auth', ['updateUser']),
-    resetPassword () {
+    /**
+     * Verifie que le mot de passe et soit correctement tappé, sinon afficher un message d'erreur
+     * @returns
+     */
+    verifiyPassword () {
       if (this.validatePassword !== this.newUserPassword.password) {
         this.error = 'MOT DE PASSE ET CONFIRMATION DIFFERENTS !'
-        return false
+        return
       }
       this.error = ''
       this.updateUser(this.newUserPassword)
     },
+    /**
+     * Reinitialise les informations personnel
+     */
     resetInformations () {
       this.newUserInfos.nom = this.getUser.nom
       this.newUserInfos.prenom = this.getUser.prenom
       this.newUserInfos.email = this.getUser.email
     },
+    /**
+     * Verifie que les nouvelles informations personnel soit différente des anciennes
+     * @returns vrai ou faux
+     */
     verifyInformations () {
       return this.newUserInfos.nom !== this.getUser.nom ||
           this.newUserInfos.prenom !== this.getUser.prenom ||
           this.newUserInfos.email !== this.getUser.email
     },
+    /**
+     * Met le focus sur le bon lien en fonction du pourcentage de scroll
+     * @param verticalPercentage le pourcentage de scroll
+     */
     updateScrollLink ({ verticalPercentage }) {
       if (verticalPercentage < 0.4) {
         this.link = 'profile'
@@ -194,11 +216,9 @@ export default defineComponent({
     }
   },
   mounted () {
-    this.newUserInfos.nom = this.getUser.nom
-    this.newUserInfos.prenom = this.getUser.prenom
-    this.newUserInfos.email = this.getUser.email
+    // Code executé au montage de la page
+    this.resetInformations()
     this.newUserPicture.photo = this.getUser.photo
-    console.log(this.getUser)
   }
 })
 </script>

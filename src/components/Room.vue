@@ -46,6 +46,10 @@ export default defineComponent({
       toggle,
       morphRef,
 
+      /**
+       * Animation de morph à l'appui du bouton 'afficher capteurs'
+       * @param room
+       */
       morphContent (room) {
         const onToggle = () => {
           toggle.value = toggle.value !== true
@@ -67,14 +71,18 @@ export default defineComponent({
     }
   },
   components: {
+    // Initialisation des composants
     sensor: require('components/Sensor.vue').default
   },
-  methods: {
-    ...mapActions('sensors', ['showSensors', 'getApiSensors', 'deleteRoom'])
-  },
   computed: {
+    // Mappage des getters des magasins
     ...mapGetters('sensors', ['showAllRooms', 'getSensors']),
-    ...mapGetters('auth', ['getUser']),
+    ...mapGetters('auth', ['getUser', 'userIsLogedIn']),
+
+    /**
+     * Compte le nombre de capteur d'une salle et retourne vrai si il y a plus de 0 capteur
+     * @returns vrai ou faux
+     */
     sensorInTheRoom () {
       let count = 0
       this.getSensors.forEach(sensor => {
@@ -85,9 +93,16 @@ export default defineComponent({
       return count > 0
     }
   },
+  methods: {
+    // Mappage des actions des magasins
+    ...mapActions('sensors', ['showSensors', 'getApiSensors', 'deleteRoom'])
+  },
   created () {
-    this.getApiSensors()
-    console.log(this.getSensors)
+    // Code executé a la creation de la page
+    // si l'utilisateur est connecté, alors appele les capteurs depuis l'API
+    if (this.userIsLogedIn) {
+      this.getApiSensors()
+    }
   }
 })
 </script>

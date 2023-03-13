@@ -46,26 +46,18 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'MainLayout',
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  },
   computed: {
+    // Mappage des getters des magasins
     ...mapGetters('auth', ['userIsLogedIn']),
     ...mapGetters('auth', ['getUser'])
   },
   methods: {
+    // Mappage des actions des magasins
     ...mapActions('auth', ['logout'])
   }
 })

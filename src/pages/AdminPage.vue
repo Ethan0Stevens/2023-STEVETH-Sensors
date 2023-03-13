@@ -15,6 +15,7 @@ export default defineComponent({
   name: 'AdminPage',
   data () {
     return {
+      // Creation des variables
       newUser: {
         nom: 'Test',
         prenom: 'Test',
@@ -25,6 +26,7 @@ export default defineComponent({
     }
   },
   methods: {
+    // Mappage des actions des magasins
     ...mapActions('auth', ['createUser'])
   }
 })

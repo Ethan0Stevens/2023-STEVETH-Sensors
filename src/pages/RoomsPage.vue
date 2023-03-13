@@ -49,6 +49,7 @@ export default defineComponent({
   name: 'RoomsPage',
   data () {
     return {
+      // Creation de variable
       clickAdd: false,
       room: {
         nom: ''
@@ -56,18 +57,25 @@ export default defineComponent({
     }
   },
   components: {
+    // Initialisation des composants
     room: require('components/Room.vue').default,
     btnLogedIn: require('components/BtnErrorLogedIn.vue').default
   },
   computed: {
+    // Mappage des getters des magasins
     ...mapGetters('sensors', ['getRooms', 'showAllRooms']),
     ...mapGetters('auth', ['userIsLogedIn', 'getUser'])
   },
   methods: {
+    // Mappage des actions des magasins
     ...mapActions('sensors', ['getApiRooms', 'addRoom'])
   },
   created () {
-    this.getApiRooms()
+    // Code executé a la creation de la page
+    // Si l'utilisateur est connecté, alors appeler les salles depuis l'API
+    if (this.userIsLogedIn) {
+      this.getApiRooms()
+    }
   }
 })
 </script>

@@ -35,13 +35,19 @@ import { mapActions, mapGetters } from 'vuex'
 export default defineComponent({
   name: 'RoomsPage',
   components: {
+    // Initialisation des composants
     sensor: require('components/Sensor.vue').default,
     btnLogedIn: require('components/BtnErrorLogedIn.vue').default,
     chart: require('components/Chart.vue').default
   },
   computed: {
+    // Mappage des getters des magasins
     ...mapGetters('sensors', ['getSensors']),
     ...mapGetters('auth', ['userIsLogedIn']),
+    /**
+     * Retourne La derniere temperatures de tous les capteurs sous forme de liste
+     * @returns La liste des temperatures
+     */
     getTemperatures () {
       const temp = []
       this.getSensors.forEach(sensor => {
@@ -49,6 +55,10 @@ export default defineComponent({
       })
       return temp
     },
+    /**
+     * Retourne La derniere mesure d'humidité de tous les capteurs sous forme de liste
+     * @returns La liste des mesures d'humidités
+     */
     getHumidite () {
       const temp = []
       this.getSensors.forEach(sensor => {
@@ -58,10 +68,15 @@ export default defineComponent({
     }
   },
   methods: {
+    // Mappage des actions des magasins
     ...mapActions('sensors', ['getApiSensors'])
   },
   created () {
-    this.getApiSensors()
+    // Code executé a la creation de la page
+    // Si l'utilisateur est connecté, alors appeler les capteurs depuis l'API
+    if (this.userIsLogedIn) {
+      this.getApiSensors()
+    }
   }
 })
 </script>

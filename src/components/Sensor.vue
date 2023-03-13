@@ -33,15 +33,21 @@ export default defineComponent({
     'sensor'
   ],
   data () {
+    // Creation des variables
     return {
       isFavorite: false
     }
   },
   components: {
+    // Initialisation des composants
     mesure: require('components/Mesure.vue').default,
     chart: require('components/Chart.vue').default
   },
   computed: {
+    /**
+     * Recupere toutes les temperatures du capteur
+     * @returns la liste des temperatures
+     */
     getTemperatures () {
       const temp = []
       this.sensor.mesures.forEach(mesure => {
@@ -49,6 +55,10 @@ export default defineComponent({
       })
       return temp
     },
+    /**
+     * Recupere toutes les mesures d'humiditée du capteur
+     * @returns la liste des mesures
+     */
     getHumidite () {
       const humi = []
       this.sensor.mesures.forEach(mesure => {
@@ -58,6 +68,9 @@ export default defineComponent({
     }
   },
   methods: {
+    /**
+     * Ajoute le capteur à la liste des favories
+     */
     makeFavorite () {
       this.isFavorite = !this.isFavorite
       let favorites = this.$q.localStorage.getItem('favorites')
@@ -72,7 +85,11 @@ export default defineComponent({
     }
   },
   mounted () {
+    // Code executé au montage de la page
+
+    // Recupere la liste des favories
     const sensors = this.$q.localStorage.getItem('favorites')
+
     if (sensors) {
       sensors.forEach(sensor => {
         if (sensor.id === this.sensor.id) {

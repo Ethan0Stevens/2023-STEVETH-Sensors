@@ -48,6 +48,7 @@ export default defineComponent({
   name: 'ConnexionPage',
   data () {
     return {
+      // Creation des variables
       user: {
         email: '',
         password: ''
@@ -55,6 +56,7 @@ export default defineComponent({
     }
   },
   methods: {
+    // Mappage des actions des magasins
     ...mapActions('auth', ['login'])
   }
 })
