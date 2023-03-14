@@ -25,8 +25,13 @@
         </q-card>
       </div>
     </div>
-    <div class="col relative-position">
-      <q-btn class="absolute-center" icon="keyboard_double_arrow_down" @click="showSensors(room)" label="Afficher capteurs" size="20px"></q-btn>
+    <div class="col justify-center column full-height">
+      <div class="col relative-position">
+        <q-btn class="absolute-center" icon="delete" @click="confirm = true" label="Supprimer salle" size="25px"></q-btn>
+      </div>
+      <div class="col relative-position">
+        <q-btn class="absolute-center" icon="keyboard_double_arrow_down" @click="showSensors(room)" label="Afficher capteurs" size="25px"></q-btn>
+      </div>
     </div>
   </div>
   <div class="q-mb-lg row justify-center text-center" v-if="room.showSensors">
@@ -53,15 +58,33 @@
       Aucun capteur
     </div>
   </q-scroll-area>
+  <q-dialog v-model="confirm" persistent>
+    <q-card>
+      <q-card-section class="row items-center">
+        <q-avatar icon="delete" color="primary" text-color="white" />
+        <span class="q-ml-sm">Voulez-vous vraiment supprimer cette salle ?</span>
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="Annuler" color="primary" v-close-popup />
+        <q-btn flat label="Supprimer" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'RoomComp',
   props: ['room'],
+  setup () {
+    return {
+      confirm: ref(false)
+    }
+  },
   data () {
     return {
       lastMesure: {
