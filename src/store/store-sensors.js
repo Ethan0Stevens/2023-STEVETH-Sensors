@@ -89,7 +89,7 @@ const actions = {
       .then(response => {
         commit('ADD_ROOM', response.data)
       })
-      .catch(error => console.log(error.response))
+      .catch(error => afficherMessageErreur('Erreur lors de la création de la salle', Object.values(error.response.data)))
     Loading.hide()
   },
   deleteRoom ({ commit, rootState }, id) {
@@ -101,7 +101,7 @@ const actions = {
     api
       .delete('salles/' + id, config)
       .then(location.reload())
-      .catch(error => console.log(error.response))
+      .catch(error => afficherMessageErreur('Erreur lors de la suppression de la salle', Object.values(error.response.data)))
     Loading.hide()
   },
   showSensors ({ commit }, room) {

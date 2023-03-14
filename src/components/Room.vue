@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="col justify-center column full-height">
-      <div class="col relative-position">
+      <div class="col relative-position" v-if="getUser.is_admin && showAllRooms">
         <q-btn class="absolute-center" icon="delete" @click="confirm = true" label="Supprimer salle" size="25px"></q-btn>
       </div>
       <div class="col relative-position">
@@ -67,7 +67,7 @@
 
       <q-card-actions align="right">
         <q-btn flat label="Annuler" color="primary" v-close-popup />
-        <q-btn flat label="Supprimer" color="primary" v-close-popup />
+        <q-btn flat label="Supprimer" color="primary" v-close-popup @click="deleteRoom(room.id)" />
       </q-card-actions>
     </q-card>
   </q-dialog>
