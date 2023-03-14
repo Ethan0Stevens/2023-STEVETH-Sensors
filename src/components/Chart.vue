@@ -13,18 +13,18 @@ export default defineComponent({
   props: [
     'temp',
     'humidite',
-    'size',
+    'dates',
     'id'
   ],
   mounted () {
     // Code executé au montage de la page
-
+    console.log(this.dates)
     // Declaration et configuration du graphique
     const ctx = document.getElementById(this.id)
     const myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: [...Array(this.size).keys()],
+        labels: this.dates,
         datasets: [{
           label: 'Humidité [ % ]',
           data: this.humidite,

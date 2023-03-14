@@ -20,7 +20,7 @@
           </q-scroll-area>
           <div class="q-mx-xl justify-center col-4" v-if="getSensors.length > 0" style="background: rgba(0,0,0,0.8); margin-top: auto; margin-bottom: auto">
             <div class="text-center text-h6 q-my-lg text-primary text-bold">Graphique de la dernière mesure de tous les capteurs</div>
-            <chart :temp="getTemperatures" :humidite="getHumidite" :size="getSensors.length" :id="'all'"/>
+            <chart :temp="getTemperatures" :humidite="getHumidite" :dates="getdates" :id="'all'"/>
           </div>
         </div>
         <btn-loged-in v-else />
@@ -63,6 +63,13 @@ export default defineComponent({
       const temp = []
       this.getSensors.forEach(sensor => {
         temp.push(sensor.mesures.at(0).humidite)
+      })
+      return temp
+    },
+    getdates () {
+      const temp = []
+      this.getSensors.forEach(sensor => {
+        temp.push(sensor.mesures.at(0).date.substring(0, 10))
       })
       return temp
     }

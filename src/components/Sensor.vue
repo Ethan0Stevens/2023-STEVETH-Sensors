@@ -6,7 +6,7 @@
       icon="sensors"
       :label="sensor.nom + '&emsp; | &emsp; ☀ ' + this.latestMesure.temperature + '°C &emsp; 🌧️ ' + this.latestMesure.humidite +'%' " >
       <div>
-        <chart class="q-my-lg" style="width: 30vw; margin-left: auto; margin-right: auto" :temp="getTemperatures" :humidite="getHumidite" :size="10" :id="sensor.id" />
+        <chart class="q-my-lg" style="width: 30vw; margin-left: auto; margin-right: auto" :temp="getTemperatures" :humidite="getHumidite" :dates="getDates" :id="sensor.id" />
       </div>
       <div class="row justify-center">
         <mesure v-for="mesure in sensor.mesures"
@@ -76,6 +76,13 @@ export default defineComponent({
         humi.push(mesure.humidite)
       })
       return humi
+    },
+    getDates () {
+      const dates = []
+      this.sensor.mesures.forEach(mesure => {
+        dates.push(mesure.date.substring(0, 10))
+      })
+      return dates
     }
   },
   methods: {

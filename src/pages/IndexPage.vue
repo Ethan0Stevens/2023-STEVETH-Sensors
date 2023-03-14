@@ -5,7 +5,7 @@
       <div class="row absolute-full" v-if="userIsLogedIn">
         <div class="col-auto column" style="margin: auto;">
           <div class="col">
-            <q-card bordered class="my-card q-ma-lg">
+            <q-card bordered class="my-card q-mt-lg">
               <q-card-section>
                 <div class="text-h6 text-center">Dernière mesure</div>
               </q-card-section>
@@ -25,8 +25,7 @@
             </q-card>
           </div>
           <div class="col rounded-borders q-mb-lg" style="background: rgba(255, 255, 255, 0.7)">
-            <div class="text-center text-h6 q-my-lg text-primary text-bold">Graphique des 2 plus récentes mesures par capteurs</div>
-            <chart class="" style="max-width: 40vw;" :temp="getTemperatures()" :humidite="getHumidite()" :size="getSensors.length * 2" :id="-1" />
+            <chart class="" style="max-width: 40vw;" :temp="getTemperatures" :humidite="getHumidite" :dates="getDates" :id="-1" />
           </div>
         </div>
         <div class="row col-auto q-mr-xl">
@@ -78,11 +77,7 @@ export default defineComponent({
   computed: {
     // Mappage des getters des magasins
     ...mapGetters('auth', ['userIsLogedIn']),
-    ...mapGetters('sensors', ['getMesures', 'getSensors'])
-  },
-  methods: {
-    // Mappage des actions des magasins
-    ...mapActions('sensors', ['getApiMesures', 'getApiSensors']),
+    ...mapGetters('sensors', ['getMesures', 'getSensors']),
     /**
      * Retourne La derniere temperatures de tous les capteurs sous forme de liste
      * @returns La liste des temperatures
@@ -107,6 +102,17 @@ export default defineComponent({
       })
       return temp
     },
+    getDates () {
+      const temp = []
+      this.getSensors.forEach(sensor => {
+        temp.push(sensor.mesures.at(0).date.substring(0, 10))
+      })
+      return temp
+    }
+  },
+  methods: {
+    // Mappage des actions des magasins
+    ...mapActions('sensors', ['getApiMesures', 'getApiSensors']),
     setLastMesure () {
       this.getSensors.forEach(sensor => {
         if (this.lastMesure.id < sensor.mesures[0].id) {
