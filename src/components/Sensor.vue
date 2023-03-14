@@ -4,7 +4,7 @@
       class="text-subtitle1 col"
       expand-separator
       icon="sensors"
-      :label="sensor.nom" >
+      :label="sensor.nom + '&emsp; | &emsp; ☀ ' + this.latestMesure.temperature + '°C &emsp; 🌧️ ' + this.latestMesure.humidite +'%' " >
       <div>
         <chart class="q-my-lg" style="width: 30vw; margin-left: auto; margin-right: auto" :temp="getTemperatures" :humidite="getHumidite" :size="10" :id="sensor.id" />
       </div>
@@ -16,7 +16,7 @@
       </div>
     </q-expansion-item>
     <q-item-section top side class="col-auto">
-      <div class="text-grey-8 q-gutter-xs">
+      <div class="text-grey-8">
         <q-btn class="gt-xs" :class="isFavorite ? 'text-yellow' : ''" @click="makeFavorite" size="20px" flat dense round icon="star" />
       </div>
     </q-item-section>
@@ -36,7 +36,11 @@ export default defineComponent({
   data () {
     // Creation des variables
     return {
-      isFavorite: false
+      isFavorite: false,
+      latestMesure: {
+        temperature: 0,
+        humidite: 0
+      }
     }
   },
   components: {
@@ -52,6 +56,9 @@ export default defineComponent({
     getTemperatures () {
       const temp = []
       this.sensor.mesures.forEach(mesure => {
+        if (temp.length <= 0) {
+          this.latestMesure.temperature = mesure.temperature
+        }
         temp.push(mesure.temperature)
       })
       return temp
@@ -63,6 +70,9 @@ export default defineComponent({
     getHumidite () {
       const humi = []
       this.sensor.mesures.forEach(mesure => {
+        if (humi.length <= 0) {
+          this.latestMesure.humidite = mesure.humidite
+        }
         humi.push(mesure.humidite)
       })
       return humi
