@@ -5,7 +5,8 @@ import { afficherMessageErreur } from 'src/functions/error-message'
 
 const state = {
   rooms: [],
-  sensors: []
+  sensors: [],
+  mesures: []
 }
 
 /*
@@ -19,6 +20,9 @@ const mutations = {
   SET_ROOMS (state, rooms) {
     state.rooms = []
     rooms.forEach(room => (state.rooms.push({ ...room, showSensors: false })))
+  },
+  SET_MESURES (state, mesures) {
+    state.mesures = mesures
   },
   ADD_ROOM (state, room) {
     state.rooms.push(room)
@@ -59,6 +63,18 @@ const actions = {
     api
       .get('salles', config)
       .then(response => commit('SET_ROOMS', response.data))
+      .catch(error => afficherMessageErreur("Erreur de connexion a l'api", Object.values(error.response.data)))
+    Loading.hide()
+  },
+  getApiMesures ({ commit, rootState }) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + rootState.auth.token }
+    }
+    api
+      .get('mesures', config)
+      .then(response => commit('SET_MESURES', response.data))
       .catch(error => afficherMessageErreur("Erreur de connexion a l'api", Object.values(error.response.data)))
     Loading.hide()
   },
@@ -104,6 +120,9 @@ const getters = {
   },
   getSensors (state) {
     return [...state.sensors]
+  },
+  getMesures (state) {
+    return [...state.mesures]
   },
   showAllRooms (state) {
     let show = true

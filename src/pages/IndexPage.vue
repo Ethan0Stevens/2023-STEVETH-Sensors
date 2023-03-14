@@ -1,88 +1,127 @@
 <template>
   <q-page>
     <video class="fixed-bottom" style="min-height: 100%; min-width: 100%; transform: translate(0, 15vh)" src="../assets/one-piece-sunny.mp4" autoplay muted loop />
-    <div class="flex flex-center absolute-full" style="background: rgba(0, 0, 0, 0.4)">
-      <q-carousel
-        v-model="slide"
-        transition-prev="jump-right"
-        transition-next="jump-left"
-        swipeable
-        animated
-        control-type="push"
-        control-color="primary"
-        prev-icon="arrow_left"
-        next-icon="arrow_right"
-        navigation
-        padding
-        arrows
-        style="height: 80vh; width: 80vw"
-        class="bg-white text-primary shadow-1 rounded-borders">
-
-        <q-carousel-slide name="style" class="column flex-center">
-          <div class="text-center row full-width">
-            <div class="col full-height">
-              <div class="text-h1 q-mb-xl">
-                B1-01
-              </div>
-              <div class="text-h6">
-                <q-card bordered class="my-card q-ma-lg">
-                  <q-card-section>
-                    <div class="text-h6 text-center">Dernière mesure</div>
-                  </q-card-section>
-                  <q-separator/>
-                  <q-card-section class="text-black">
-                    <div class="row q-ma-lg text-center">
-                      <div class="col">
-                        <q-icon name="sunny" size="40px"></q-icon>
-                        0 °C
-                      </div>
-                      <div class="col">
-                        <q-icon name="water_drop" size="40px"></q-icon>
-                        100 %
-                      </div>
-                    </div>
-                    <div class="q-mt-xl"> 19-06-2004  </div>
-                  </q-card-section>
-                </q-card>
-              </div>
+    <div class="absolute-full" style="background: rgba(0, 0, 0, 0.4)" >
+      <div class="row absolute-full" v-if="userIsLogedIn">
+        <div class="col-auto column" style="margin: auto;">
+          <div class="col">
+            <q-card bordered class="my-card q-ma-lg">
+              <q-card-section>
+                <div class="text-h6 text-center">Dernière mesure</div>
+              </q-card-section>
+              <q-separator/>
+              <q-card-section class="text-black">
+                <div class="row q-ma-lg text-center">
+                  <div class="col">
+                    <q-icon name="sunny" size="40px"></q-icon>
+                    {{ lastMesure.temperature }} °C
+                  </div>
+                  <div class="col">
+                    <q-icon name="water_drop" size="40px"></q-icon>
+                    {{ lastMesure.humidite }} %
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+          <div class="col rounded-borders q-mb-lg" style="background: rgba(255, 255, 255, 0.7)">
+            <div class="text-center text-h6 q-my-lg text-primary text-bold">Graphique des 2 plus récentes mesures par capteurs</div>
+            <chart class="" style="max-width: 40vw;" :temp="getTemperatures()" :humidite="getHumidite()" :size="getSensors.length * 2" :id="-1" />
+          </div>
+        </div>
+        <div class="row col-auto q-mr-xl">
+          <q-scroll-area
+            class="text-black rounded-borders"
+            style="height: 85vh; width: 50vw;margin: auto; background: rgba(255, 255, 255, 0.7)">
+            <div class="q-py-sm q-px-md" v-if="favorites.length > 0">
+              <q-list bordered padding class="rounded-borders text-primary">
+                <sensor v-for="sensor in favorites"
+                        :key="sensor.id"
+                        :sensor="sensor"
+                        roomId="all" />
+              </q-list>
             </div>
-            <div class="col relative-position">
-              <q-btn class="absolute-center" icon="keyboard_double_arrow_down" label="Afficher capteurs" size="20px"></q-btn>
+            <div class="text-h2 text-bold text-primary text-center absolute-center full-width" v-else>
+              Aucun capteur favori
             </div>
-          </div>
-        </q-carousel-slide>
-
-        <q-carousel-slide name="tv" class="column no-wrap flex-center">
-          <q-icon name="live_tv" size="56px" />
-          <div class="q-mt-md text-center">
-            2
-          </div>
-        </q-carousel-slide>
-        <q-carousel-slide name="layers" class="column no-wrap flex-center">
-          <q-icon name="layers" size="56px" />
-          <div class="q-mt-md text-center">
-            3
-          </div>
-        </q-carousel-slide>
-        <q-carousel-slide name="map" class="column no-wrap flex-center">
-          <q-icon name="terrain" size="56px" />
-          <div class="q-mt-md text-center">
-            4
-          </div>
-        </q-carousel-slide>
-      </q-carousel>
+          </q-scroll-area>
+        </div>
+      </div>
+      <btn-loged-in v-else />
     </div>
   </q-page>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'IndexPage',
-  setup () {
+  data () {
     return {
-      slide: ref('style')
+      // Creation des variables
+      favorites: {},
+      lastMesure: {
+        id: -1,
+        temperature: 0,
+        humidite: 0
+      }
+    }
+  },
+  components: {
+    // Initialisation des composants
+    sensor: require('components/Sensor.vue').default,
+    chart: require('components/Chart.vue').default,
+    btnLogedIn: require('components/BtnErrorLogedIn.vue').default
+  },
+  computed: {
+    // Mappage des getters des magasins
+    ...mapGetters('auth', ['userIsLogedIn']),
+    ...mapGetters('sensors', ['getMesures', 'getSensors'])
+  },
+  methods: {
+    // Mappage des actions des magasins
+    ...mapActions('sensors', ['getApiMesures', 'getApiSensors']),
+    /**
+     * Retourne La derniere temperatures de tous les capteurs sous forme de liste
+     * @returns La liste des temperatures
+     */
+    getTemperatures () {
+      const temp = []
+      this.getSensors.forEach(sensor => {
+        temp.push(sensor.mesures.at(0).temperature)
+        temp.push(sensor.mesures.at(1).temperature)
+      })
+      return temp
+    },
+    /**
+     * Retourne La derniere mesure d'humidité de tous les capteurs sous forme de liste
+     * @returns La liste des mesures d'humidités
+     */
+    getHumidite () {
+      const temp = []
+      this.getSensors.forEach(sensor => {
+        temp.push(sensor.mesures.at(0).humidite)
+        temp.push(sensor.mesures.at(1).humidite)
+      })
+      return temp
+    },
+    setLastMesure () {
+      this.getSensors.forEach(sensor => {
+        if (this.lastMesure.id < sensor.mesures[0].id) {
+          this.lastMesure = sensor.mesures[0]
+        }
+      })
+    }
+  },
+  created () {
+    // Code executé a la création de la page
+    // Recupere la liste des favorits dans le LocalStorage
+    this.favorites = this.$q.localStorage.getItem('favorites')
+    if (this.userIsLogedIn) {
+      this.getApiSensors()
+      this.setLastMesure()
     }
   }
 })
