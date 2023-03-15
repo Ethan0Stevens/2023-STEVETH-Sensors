@@ -154,6 +154,9 @@ export default defineComponent({
   methods: {
     // Mappage des actions des magasins
     ...mapActions('sensors', ['showSensors', 'getApiSensors', 'deleteRoom', 'modifyRoom']),
+    /**
+     * Définit la derniere mesure en comparent la derniere mesure de chaque capteur
+     */
     setLastMesure () {
       this.getSensors.forEach(sensor => {
         if (sensor.salle.id === this.room.id) {

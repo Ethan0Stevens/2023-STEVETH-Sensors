@@ -66,6 +66,10 @@ export default defineComponent({
       })
       return temp
     },
+    /**
+     * Retourne les dates de chaques mesure de chaque capteurs
+     * @returns la liste de dates
+     */
     getdates () {
       const temp = []
       this.getSensors.forEach(sensor => {

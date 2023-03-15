@@ -77,6 +77,10 @@ export default defineComponent({
       })
       return humi
     },
+    /**
+     * Recupere les dates de chaques mesures du capteur
+     * @returns la liste des dates
+     */
     getDates () {
       const dates = []
       this.sensor.mesures.forEach(mesure => {

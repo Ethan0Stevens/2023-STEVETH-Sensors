@@ -102,6 +102,10 @@ export default defineComponent({
       })
       return temp
     },
+    /**
+     * Retourne la dates de la derniere mesure de chaques capteur
+     * @returns La liste de dates
+     */
     getDates () {
       const temp = []
       this.getSensors.forEach(sensor => {
@@ -113,6 +117,9 @@ export default defineComponent({
   methods: {
     // Mappage des actions des magasins
     ...mapActions('sensors', ['getApiMesures', 'getApiSensors']),
+    /**
+     * Définit la derniere mesure en comparent la derniere mesure de chaque capteur
+     */
     setLastMesure () {
       this.getSensors.forEach(sensor => {
         if (this.lastMesure.id < sensor.mesures[0].id) {
