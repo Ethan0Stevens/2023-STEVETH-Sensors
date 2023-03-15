@@ -3,6 +3,7 @@ import { api } from 'boot/axios'
 import { afficherMessageErreur } from 'src/functions/error-message'
 import { Loading, LocalStorage } from 'quasar'
 
+// Déclaration des variables du state
 const state = {
   user: null,
   token: null
@@ -13,9 +14,19 @@ Mutations : méthode qui manipulent les données
 Les mutations ne peuvent pas être asynchrones !!!
  */
 const mutations = {
+  /**
+   * Définit l'utilisateur du state
+   * @param state le state du magasin
+   * @param user l'utilisateur à assigner au state
+   */
   SET_USER (state, user) {
     state.user = user
   },
+  /**
+   * Définit le token du state
+   * @param state le state du magasin
+   * @param token le token à assigner au state
+   */
   SET_TOKEN (state, token) {
     state.token = token
   }
@@ -25,6 +36,11 @@ Actions : méthodes du magasin qui font appel aux mutations
 Elles peuvent être asynchrones !
  */
 const actions = {
+  /**
+   * Requete de connexion a l'api
+   * @param dispatch
+   * @param payload données utilisées pour la connexion
+   */
   login ({ dispatch }, payload) {
     Loading.show()
     api
@@ -38,6 +54,11 @@ const actions = {
         afficherMessageErreur('Cet utilisateur n\'existe pas !', Object.values(error.response.data))
       })
   },
+  /**
+   * Requete de déconnexion à l'api
+   * @param commit
+   * @param state le state du magasin
+   */
   logout ({ commit, state }) {
     Loading.show()
     // Configuration du header avec token
@@ -61,6 +82,12 @@ const actions = {
       })
     Loading.hide()
   },
+  /**
+   * Requete de mise à jour de l'utilisateur
+   * @param commit
+   * @param state le state du magasin
+   * @param payload les données utiles a la modification d'un utilisateur
+   */
   updateUser ({ commit, state }, payload) {
     Loading.show()
     // Configuration du header avec token
@@ -79,6 +106,11 @@ const actions = {
       })
     Loading.hide()
   },
+  /**
+   * Requete de creation d'un utilisateur à l'api
+   * @param state le state du magasin
+   * @param payload Données utiles à la creation d'un utilisateur
+   */
   createUser ({ state }, payload) {
     Loading.show()
     console.log('Token :', state.token)
@@ -97,6 +129,11 @@ const actions = {
       })
     Loading.hide()
   },
+  /**
+   * Action d'assignement des données de l'utilisateur au state
+   * @param commit
+   * @param data les données à assigner
+   */
   setUser ({ commit }, data) {
     commit('SET_USER', data.user)
     commit('SET_TOKEN', data.access_token)
@@ -114,12 +151,27 @@ Fonctionne comme les propriétés calculées
 Sert à calculer, trier, filtrer ou formater les donneés
  */
 const getters = {
+  /**
+   * Retourne si oui ou non l'utilisateur est connecté
+   * @param state le state du magasin
+   * @returns boolean
+   */
   userIsLogedIn (state) {
     return state.user != null && state.token != null
   },
+  /**
+   * Getter de l'utilisateur du magasin
+   * @param state le state du magasin
+   * @returns l'utilisateur
+   */
   getUser (state) {
     return { ...state.user }
   },
+  /**
+   * Getter du token du magasin
+   * @param state le state du magasin
+   * @returns le token
+   */
   getToken (state) {
     return state.token
   }
