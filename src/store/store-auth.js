@@ -6,7 +6,8 @@ import { Loading, LocalStorage } from 'quasar'
 // Déclaration des variables du state
 const state = {
   user: null,
-  token: null
+  token: null,
+  users: null
 }
 
 /*
@@ -21,6 +22,9 @@ const mutations = {
    */
   SET_USER (state, user) {
     state.user = user
+  },
+  SET_USERS (state, users) {
+    state.users = users
   },
   /**
    * Définit le token du state
@@ -122,10 +126,28 @@ const actions = {
       .post('newuser', payload, config)
       .then(response => {
         console.log('Create !', response.data)
+        location.reload()
       })
       .catch(error => {
         afficherMessageErreur('Creation impossible', Object.values(error.response.data))
         console.log('Error !', error.response.data)
+      })
+    Loading.hide()
+  },
+  getAllUsers ({ state, commit }) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + state.token }
+    }
+    api
+      .get('utilisateurs', config)
+      .then(response => {
+        commit('SET_USERS', response.data)
+        console.log(response.data)
+      })
+      .catch(error => {
+        afficherMessageErreur('Impossible de récuperer les utilisateurs', Object.values(error.response.data))
       })
     Loading.hide()
   },
@@ -166,6 +188,9 @@ const getters = {
    */
   getUser (state) {
     return { ...state.user }
+  },
+  getUsers (state) {
+    return { ...state.users }
   },
   /**
    * Getter du token du magasin
