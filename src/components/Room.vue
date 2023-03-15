@@ -1,8 +1,13 @@
 <template>
   <div class="text-center row full-width" v-if="showAllRooms || !room.showSensors">
     <div class="col full-height">
-      <div class="text-h1 q-mb-xl">
-        {{ room.nom }}
+      <div class="text-h1 q-mb-xl row relative-position">
+        <div class="col">
+          {{ room.nom }}
+        </div>
+        <div class="col-5 absolute-left" v-if="getUser.is_admin && showAllRooms">
+          <q-btn @click="modify = true" icon="build" />
+        </div>
       </div>
       <div class="text-h6">
         <q-card bordered class="my-card q-ma-lg">
@@ -71,6 +76,27 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+  <q-dialog v-model="modify">
+    <q-card class="my-card full-width">
+      <q-card-section>
+        <div class="row no-wrap items-center text-center">
+          <div class="col text-h5 text-bold ellipsis">
+            Modifier la salle
+          </div>
+        </div>
+      </q-card-section>
+      <q-card-section class="q-pt-none">
+        <q-form class="relative-position justify-center items-center">
+          <q-input maxlength="5" class="q-mx-lg q-mb-lg" v-model="payload.room.nom" :rules="[ val => val && val.length > 0 || 'Champ obligatoire']"></q-input>
+          <q-separator />
+          <div class="row q-mt-md">
+            <q-btn class="col" v-close-popup flat color="primary" label="Annuler" />
+            <q-btn class="col" v-close-popup flat color="primary" label="Modifier" @click="modifyRoom(payload)"/>
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -82,7 +108,8 @@ export default defineComponent({
   props: ['room'],
   setup () {
     return {
-      confirm: ref(false)
+      confirm: ref(false),
+      modify: ref(false)
     }
   },
   data () {
@@ -91,6 +118,12 @@ export default defineComponent({
         id: -1,
         temperature: 0,
         humidite: 0
+      },
+      payload: {
+        room: {
+          nom: ''
+        },
+        id: 0
       }
     }
   },
@@ -120,7 +153,7 @@ export default defineComponent({
   },
   methods: {
     // Mappage des actions des magasins
-    ...mapActions('sensors', ['showSensors', 'getApiSensors', 'deleteRoom']),
+    ...mapActions('sensors', ['showSensors', 'getApiSensors', 'deleteRoom', 'modifyRoom']),
     setLastMesure () {
       this.getSensors.forEach(sensor => {
         if (sensor.salle.id === this.room.id) {
@@ -137,6 +170,8 @@ export default defineComponent({
     if (this.userIsLogedIn) {
       this.getApiSensors()
       this.setLastMesure()
+      this.payload.room.nom = this.room.nom
+      this.payload.id = this.room.id
     }
   }
 })

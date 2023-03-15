@@ -92,6 +92,19 @@ const actions = {
       .catch(error => afficherMessageErreur('Erreur lors de la création de la salle', Object.values(error.response.data)))
     Loading.hide()
   },
+  modifyRoom ({ commit, rootState }, payload) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + rootState.auth.token }
+    }
+    console.log(payload)
+    api
+      .put('salles/' + payload.id, payload.room, config)
+      .then(location.reload())
+      .catch(error => afficherMessageErreur('Erreur lors de la modification de la salle', Object.values(error.response.data)))
+    Loading.hide()
+  },
   deleteRoom ({ commit, rootState }, id) {
     Loading.show()
     // Configuration du header avec token
