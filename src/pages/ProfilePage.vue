@@ -83,7 +83,7 @@
                   <q-input class="col q-ma-lg" v-model="newUserPassword.password" type="password" outlined label="Nouveau mot de passe" />
                   <q-input class="col q-ma-lg" v-if="newUserPassword.password !== ''" v-model="validatePassword" type="password" outlined label="Confirmer mot de passe" />
                   <div class="full-width relative-position row">
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" :disable="newUserPassword.password === ''" label="Sauvegarder" @click="verifiyPassword" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" :disable="newUserPassword.password === ''" label="Sauvegarder" @click="verifiyPassword()" color="primary" />
                     <q-btn class="q-pa-md q-ma-lg text-h6 col" v-if="newUserPassword.password !== ''" label="Annuler" @click="newUserPassword.password = ''; validatePassword = ''; error = ''" color="primary" />
                   </div>
                 </div>
@@ -99,8 +99,8 @@
                   <q-input class="col q-ma-lg" v-model="this.newUserInfos.prenom" outlined label="Prenom" />
                   <q-input class="col q-ma-lg" v-model="this.newUserInfos.email" outlined label="E-mail" />
                   <div class="full-width relative-position row">
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Sauvegarder" @click="updateUser(newUserInfos)" :disable="!verifyInformations" color="primary" />
-                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Annuler" @click="resetInformations" v-if="verifyInformations" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Sauvegarder" @click="updateUser(newUserInfos)" :disable="!verifyInformations()" color="primary" />
+                    <q-btn class="q-pa-md q-ma-lg text-h6 col" label="Annuler" @click="resetInformations()" v-if="verifyInformations()" color="primary" />
                   </div>
                 </div>
               </q-card-section>

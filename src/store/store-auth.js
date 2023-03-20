@@ -23,6 +23,12 @@ const mutations = {
   SET_USER (state, user) {
     state.user = user
   },
+  /**
+   * Définit la liste des utilisateurs du state
+   * @param state le state du magasin
+   * @param users les utilisateurs à assigner au state
+   * @constructor
+   */
   SET_USERS (state, users) {
     state.users = users
   },
@@ -79,7 +85,7 @@ const actions = {
         // Vide le locaStorage
         LocalStorage.clear(),
 
-        location.reload()
+        this.$router.push('/')
       )
       .catch(error => {
         afficherMessageErreur('Déconnexion impossible', Object.values(error.response.data))
@@ -125,15 +131,39 @@ const actions = {
     api
       .post('newuser', payload, config)
       .then(response => {
-        console.log('Create !', response.data)
         location.reload()
       })
       .catch(error => {
         afficherMessageErreur('Creation impossible', Object.values(error.response.data))
-        console.log('Error !', error.response.data)
       })
     Loading.hide()
   },
+  /**
+   * Rend admin l'utilisateur dont l'id est passé en parametre
+   * @param state le state du magasin
+   * @param id l'id de l'utilisateur
+   */
+  setAdmin ({ state }, id) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + state.token }
+    }
+    api
+      .post('setadmin/' + id, config)
+      .then(response => {
+        location.reload()
+      })
+      .catch(error => {
+        afficherMessageErreur("Impossible de rendre l'utilisateur admin", Object.values(error.response.data))
+      })
+    Loading.hide()
+  },
+  /**
+   * Récuperer depuis l'api, la liste des utilisateurs
+   * @param state le state du magasin
+   * @param commit
+   */
   getAllUsers ({ state, commit }) {
     Loading.show()
     // Configuration du header avec token
@@ -189,6 +219,11 @@ const getters = {
   getUser (state) {
     return { ...state.user }
   },
+  /**
+   * Getter de la liste des utilisateurs
+   * @param state
+   * @returns {{}}
+   */
   getUsers (state) {
     return { ...state.users }
   },

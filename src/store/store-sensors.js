@@ -50,6 +50,14 @@ const mutations = {
     state.rooms.push(room)
   },
   /**
+   * Ajouter un capteur à la liste de capteurs
+   * @param state le state du magasin
+   * @param sensor le capteur à ajouter
+   */
+  ADD_SENSOR (state, sensor) {
+    state.sensors.push(sensor)
+  },
+  /**
    * Change l'etat de si oui ou non la salle doit afficher les capteurs
    * @param state le state du magasin
    * @param room la salle à modifier
@@ -133,9 +141,7 @@ const actions = {
     }
     api
       .post('salles', payload, config)
-      .then(response => {
-        commit('ADD_ROOM', response.data)
-      })
+      .then(location.reload())
       .catch(error => afficherMessageErreur('Erreur lors de la création de la salle', Object.values(error.response.data)))
     Loading.hide()
   },
@@ -174,6 +180,42 @@ const actions = {
       .delete('salles/' + id, config)
       .then(location.reload())
       .catch(error => afficherMessageErreur('Erreur lors de la suppression de la salle', Object.values(error.response.data)))
+    Loading.hide()
+  },
+  /**
+   * Appele de l'api pour ajouter un capteur
+   * @param commit
+   * @param rootState
+   * @param payload Données utile à l'ajout
+   */
+  addSensor ({ commit, rootState }, payload) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + rootState.auth.token }
+    }
+    api
+      .post('capteurs', payload, config)
+      .then(location.reload())
+      .catch(error => afficherMessageErreur('Erreur lors de la création du capteur', Object.values(error.response.data)))
+    Loading.hide()
+  },
+  /**
+   * Appele de l'api pour supprimer un capteur
+   * @param commit
+   * @param rootState
+   * @param id id du capteur a supprimer
+   */
+  deleteSensor ({ commit, rootState }, id) {
+    Loading.show()
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + rootState.auth.token }
+    }
+    api
+      .delete('capteurs/' + id, config)
+      .then(location.reload())
+      .catch(error => afficherMessageErreur('Erreur lors de la suppression du capteur', Object.values(error.response.data)))
     Loading.hide()
   },
   /**

@@ -12,6 +12,11 @@
                         :key="sensor.id"
                         :sensor="sensor"
                         roomId="all" />
+                <!-- Probleme dans l'api lors de l'ajout d'un capteur
+                <q-item class="full-width row text-center" v-if="getUser.is_admin">
+                  <q-btn class="full-width bg-primary text-white" size="20px" flat dense rounded icon="add" @click="clickAdd = true" />
+                </q-item>
+                -->
               </q-list>
             </div>
             <div class="text-h2 text-bold text-primary text-center absolute-center full-width" v-else>
@@ -24,6 +29,28 @@
           </div>
         </div>
         <btn-loged-in v-else />
+        <q-dialog v-model="clickAdd">
+          <q-card class="my-card full-width">
+            <q-card-section>
+              <div class="row no-wrap items-center text-center">
+                <div class="col text-h5 text-bold ellipsis">
+                  Ajouter un capteur
+                </div>
+              </div>
+            </q-card-section>
+            <q-card-section class="q-pt-none">
+              <q-form class="relative-position justify-center items-center" @submit="addSensor(newSensor)">
+                <q-input class="q-my-lg" v-model="newSensor.nom" label="Nom" />
+                <q-input class="q-my-lg" v-model="newSensor.code" label="Code" />
+                <q-select class="q-my-lg" outlined v-model="newSensor.salle_id" :options="getRoomsId" label="ID Salle" />
+                <div class="row q-mt-md">
+                  <q-btn class="col" v-close-popup flat color="primary" label="Annuler" />
+                  <q-btn class="col" v-close-popup flat color="primary" label="Ajouter" type="submit"/>
+                </div>
+              </q-form>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
       </div>
   </q-page>
 </template>
@@ -34,6 +61,17 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'RoomsPage',
+  data () {
+    return {
+      clickAdd: false,
+      newSensor: {
+        nom: '',
+        logo: 'null',
+        code: '',
+        salle_id: 0
+      }
+    }
+  },
   components: {
     // Initialisation des composants
     sensor: require('components/Sensor.vue').default,
@@ -42,8 +80,8 @@ export default defineComponent({
   },
   computed: {
     // Mappage des getters des magasins
-    ...mapGetters('sensors', ['getSensors']),
-    ...mapGetters('auth', ['userIsLogedIn']),
+    ...mapGetters('sensors', ['getSensors', 'getRooms']),
+    ...mapGetters('auth', ['userIsLogedIn', 'getUser']),
     /**
      * Retourne La derniere temperatures de tous les capteurs sous forme de liste
      * @returns La liste des temperatures
@@ -76,17 +114,29 @@ export default defineComponent({
         temp.push(sensor.mesures.at(0).date.substring(0, 10))
       })
       return temp
+    },
+    /**
+     * Retourne une liste de l'id de chaque capteur
+     * @returns La liste d'id
+     */
+    getRoomsId () {
+      const temp = []
+      this.getRooms.forEach(room => {
+        temp.push(room.id)
+      })
+      return temp
     }
   },
   methods: {
     // Mappage des actions des magasins
-    ...mapActions('sensors', ['getApiSensors'])
+    ...mapActions('sensors', ['getApiSensors', 'getApiRooms', 'addSensor'])
   },
   created () {
     // Code executé a la creation de la page
     // Si l'utilisateur est connecté, alors appeler les capteurs depuis l'API
     if (this.userIsLogedIn) {
       this.getApiSensors()
+      this.getApiRooms()
     }
   }
 })

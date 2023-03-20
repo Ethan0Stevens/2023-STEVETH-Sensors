@@ -82,7 +82,7 @@ export default defineComponent({
     // Mappage des actions des magasins
     ...mapActions('sensors', ['getApiRooms', 'addRoom'])
   },
-  created () {
+  mounted () {
     // Code executé a la creation de la page
     // Si l'utilisateur est connecté, alors appeler les salles depuis l'API
     if (this.userIsLogedIn) {

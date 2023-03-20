@@ -134,22 +134,7 @@ export default defineComponent({
   computed: {
     // Mappage des getters des magasins
     ...mapGetters('sensors', ['showAllRooms', 'getSensors']),
-    ...mapGetters('auth', ['getUser', 'userIsLogedIn']),
-
-    /**
-     * Compte le nombre de capteur d'une salle et retourne vrai si il y a plus de 0 capteur
-     * @returns vrai ou faux
-     */
-    sensorInTheRoom () {
-      let count = 0
-      this.getSensors.forEach(sensor => {
-        if (sensor.salle.id === this.room.id) {
-          this.setLastMesure(sensor.mesures.at(0))
-          count++
-        }
-      })
-      return count > 0
-    }
+    ...mapGetters('auth', ['getUser', 'userIsLogedIn'])
   },
   methods: {
     // Mappage des actions des magasins
@@ -165,6 +150,20 @@ export default defineComponent({
           }
         }
       })
+    },
+    /**
+     * Compte le nombre de capteur d'une salle et retourne vrai si il y a plus de 0 capteur
+     * @returns vrai ou faux
+     */
+    sensorInTheRoom () {
+      let count = 0
+      this.getSensors.forEach(sensor => {
+        if (sensor.salle.id === this.room.id) {
+          this.setLastMesure(sensor.mesures.at(0))
+          count++
+        }
+      })
+      return count > 0
     }
   },
   created () {

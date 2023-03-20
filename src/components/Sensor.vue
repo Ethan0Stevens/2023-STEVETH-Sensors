@@ -18,6 +18,9 @@
     <q-item-section top side class="col-auto">
       <div class="text-grey-8">
         <q-btn class="gt-xs" :class="isFavorite ? 'text-yellow' : ''" @click="makeFavorite" size="20px" flat dense round icon="star" />
+        <!-- Probleme dans l'api lors de l'ajout d'un capteur, donc suppression impossible a tester
+        <q-btn class="gt-xs" @click="clickDelete = true" size="20px" flat dense rounded icon="delete" v-if="getUser.is_admin" />
+        -->
       </div>
     </q-item-section>
   </q-item>
@@ -26,6 +29,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { LocalStorage } from 'quasar'
+import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'SensorComp',
@@ -40,7 +44,8 @@ export default defineComponent({
       latestMesure: {
         temperature: 0,
         humidite: 0
-      }
+      },
+      clickDelete: false
     }
   },
   components: {
@@ -49,6 +54,7 @@ export default defineComponent({
     chart: require('components/Chart.vue').default
   },
   computed: {
+    ...mapGetters('auth', ['getUser']),
     /**
      * Recupere toutes les temperatures du capteur
      * @returns la liste des temperatures
@@ -90,6 +96,7 @@ export default defineComponent({
     }
   },
   methods: {
+    ...mapActions('sensors', ['deleteSensor']),
     /**
      * Ajoute le capteur à la liste des favories
      */
